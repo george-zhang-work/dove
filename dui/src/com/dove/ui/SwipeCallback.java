@@ -33,4 +33,10 @@ public interface SwipeCallback {
      * @param v The view to be dragged.
      */
     void onBeginDrag(View v);
+
+    void onChildDismissed(SwipeableItemView v);
+
+    void onDragCancelled(SwipeableItemView v);
+
+    SwipeableItemBehindView getSwipeableItemBehindView();
 }
