@@ -3,6 +3,7 @@ package com.dove.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.ListView;
 
 public class SwipeableListView extends ListView {
@@ -19,4 +20,16 @@ public class SwipeableListView extends ListView {
         super(context, attrs, defStyle);
     }
 
+    @Override
+    public boolean onInterceptHoverEvent(MotionEvent event) {
+        // TODO Auto-generated method stub
+        return super.onInterceptHoverEvent(event);
+    }
+    
+    
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        // TODO Auto-generated method stub
+        return super.onTouchEvent(ev);
+    }
 }
