@@ -76,11 +76,11 @@ public class SwipeableListView extends ListView implements SwipeCallback, OnScro
     }
 
     @Override
-    public boolean onInterceptHoverEvent(MotionEvent event) {
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
         if (mScrolling || !mEnableSwipe) {
-            return super.onInterceptHoverEvent(event);
+            return super.onInterceptTouchEvent(ev);
         } else {
-            return mSwipeHelper.onInterceptHoverEvent(event) || super.onInterceptHoverEvent(event);
+            return mSwipeHelper.onInterceptTouchEvent(ev) || super.onInterceptTouchEvent(ev);
         }
     }
 

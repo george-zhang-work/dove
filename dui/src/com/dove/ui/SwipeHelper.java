@@ -90,7 +90,7 @@ public class SwipeHelper {
             MAX_ESCAPE_ANIMATION_DURATION = res.getInteger(R.integer.max_escape_animation_duration);
             MAX_DISMISS_VELOCITY = res.getInteger(R.integer.max_dismiss_velocity);
             SNAP_ANIM_LEN = res.getInteger(R.integer.snap_animation_duration);
-            MIN_SWIPE = res.getInteger(R.dimen.min_swipe);
+            MIN_SWIPE = res.getDimension(R.dimen.min_swipe);
         }
     }
 
@@ -105,7 +105,7 @@ public class SwipeHelper {
     /**
      * @see ViewGroup#onInterceptTouchEvent(MotionEvent)
      */
-    public boolean onInterceptHoverEvent(MotionEvent ev) {
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
         final int action = ev.getActionMasked();
         switch (action) {
             case MotionEvent.ACTION_DOWN:

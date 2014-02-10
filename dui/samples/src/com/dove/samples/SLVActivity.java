@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.dove.ui.SwipeableListView;
 
@@ -18,6 +19,7 @@ public class SLVActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slv);
         mSwipeableListView = (SwipeableListView) findViewById(android.R.id.list);
+        mSwipeableListView.setAdapter(new SwipeableListAdapter());
     }
 
     @Override
@@ -46,8 +48,22 @@ public class SLVActivity extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return null;
+            ViewHolder vh;
+            if (convertView == null) {
+                vh = new ViewHolder();
+                convertView = new SListItemView(SLVActivity.this);
+                vh.mTextView = (TextView) convertView.findViewById(R.id.text);
+                convertView.setTag(vh);
+            } else {
+                vh = (ViewHolder) convertView.getTag();
+            }
+            String text = (String) getItem(position);
+            vh.mTextView.setText(text);
+            return convertView;
         }
 
+        class ViewHolder {
+            TextView mTextView;
+        }
     }
 }

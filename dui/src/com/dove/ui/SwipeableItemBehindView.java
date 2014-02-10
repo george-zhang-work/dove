@@ -1,12 +1,10 @@
 
 package com.dove.ui;
 
-public class SwipeableItemBehindView {
+public interface SwipeableItemBehindView {
 
     /**
      * Set the alpha value for the text displayed by this item.
      */
-    public void setTextAlpha(float alpha) {
-
-    }
+    public void setTextAlpha(float alpha);
 }
