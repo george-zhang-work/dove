@@ -73,8 +73,6 @@ public class SwipeableListView extends ListView implements SwipeCallback, OnScro
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
             int totalItemCount) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -118,8 +116,6 @@ public class SwipeableListView extends ListView implements SwipeCallback, OnScro
 
     @Override
     public void onScroll() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -131,19 +127,14 @@ public class SwipeableListView extends ListView implements SwipeCallback, OnScro
 
     @Override
     public void onChildDismissed(SwipeableItemView v) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void onDragCancelled(SwipeableItemView v) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public SwipeableItemBehindView getSwipeableItemBehindView() {
-        // TODO Auto-generated method stub
         return null;
     }
 
