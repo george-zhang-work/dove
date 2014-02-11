@@ -258,7 +258,7 @@ public class SwipeHelper {
 
     private void setTranslation(View v, float translate) {
         if (mSwipeDirection == HORIZONTAL) {
-            v.setRotationX(translate);
+            v.setTranslationX(translate);
         } else {
             v.setTranslationY(translate);
         }
