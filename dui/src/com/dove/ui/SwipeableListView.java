@@ -7,18 +7,27 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
-
-import com.dove.log.LogUtils;
+import android.widget.ListView;
 
 public class SwipeableListView extends ListView implements SwipeCallback, OnScrollListener {
     private static final String TAG = SwipeableListView.class.getSimpleName();
-    private SwipeHelper mSwipeHelper;
-    private boolean mEnableSwipe;
+
     private boolean mScrolling;
+    private boolean mEnableSwipe;
+    private SwipeHelper mSwipeHelper;
+    private SwipeListener mSwipeListener;
+
+    /**
+     * The listener that's used to listener the swipe operation.
+     */
+    public interface SwipeListener {
+        /**
+         * The swipe callback at the beginning of swiping.
+         */
+        public void onBeginSwipe();
+    }
 
     public SwipeableListView(Context context) {
         super(context);
@@ -37,19 +46,17 @@ public class SwipeableListView extends ListView implements SwipeCallback, OnScro
 
     private void init(Context context) {
         mEnableSwipe = true;
-        float densityScale = getResources().getDisplayMetrics().density;
-        float pagingTouchSlop = ViewConfiguration.get(context).getScaledPagingTouchSlop();
-        mSwipeHelper = new SwipeHelper(context, this, SwipeHelper.HORIZONTAL, densityScale,
-                pagingTouchSlop);
+        mSwipeHelper = new SwipeHelper(context, this, SwipeHelper.HORIZONTAL);
     }
 
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        float densityScale = getResources().getDisplayMetrics().density;
-        mSwipeHelper.setDensityScale(densityScale);
-        float pagingTouchSlop = ViewConfiguration.get(getContext()).getScaledPagingTouchSlop();
-        mSwipeHelper.setPagingTouchSlop(pagingTouchSlop);
+        mSwipeHelper.onConfigurationChanged(getContext(), newConfig);
+    }
+
+    public void setSwipeListener(SwipeListener swipeListener) {
+        mSwipeListener = swipeListener;
     }
 
     /**
@@ -119,7 +126,7 @@ public class SwipeableListView extends ListView implements SwipeCallback, OnScro
     }
 
     @Override
-    public boolean canChildBeDimissed(SwipeableItemView swipeableItemView) {
+    public boolean canBeDimissed(SwipeableItemView swipeableItemView) {
         return swipeableItemView.canChildBeDismissed();
     }
 
@@ -132,14 +139,18 @@ public class SwipeableListView extends ListView implements SwipeCallback, OnScro
         // We do this so the underlying ScrollView knows that it won't get
         // the chance to intercept events anymore
         requestDisallowInterceptTouchEvent(true);
+
+        if (mSwipeListener != null) {
+            mSwipeListener.onBeginSwipe();
+        }
     }
 
     @Override
-    public void onChildDismissed(SwipeableItemView v) {
+    public void onDismissed(SwipeableItemView v) {
     }
 
     @Override
-    public void onDragCancelled(SwipeableItemView v) {
+    public void onCancelled(SwipeableItemView v) {
     }
 
     @Override

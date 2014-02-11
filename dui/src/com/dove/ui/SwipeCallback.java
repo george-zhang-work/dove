@@ -20,10 +20,25 @@ public interface SwipeCallback {
      * @param swipeableItemView The view to be checked.
      * @return true if the view could be dismissed, false otherwise.
      */
-    boolean canChildBeDimissed(SwipeableItemView swipeableItemView);
+    boolean canBeDimissed(SwipeableItemView swipeableItemView);
 
     /**
-     * The current gesture detects a scroll operation.
+     * Callback to be invoked when the SwipeableItemView is dismissed.
+     * 
+     * @param swipeableItemView The view is dismissed.
+     */
+    void onDismissed(SwipeableItemView swipeableItemView);
+
+    /**
+     * Callback to be invoked when the SwipeableItemView swiping operation is
+     * cancelled.
+     * 
+     * @param swipeableItemView Whose swipe operations is cancelled.
+     */
+    void onCancelled(SwipeableItemView swipeableItemView);
+
+    /**
+     * The current gesture detects a scroll operation, not a swiping operation.
      */
     void onScroll();
 
@@ -33,10 +48,6 @@ public interface SwipeCallback {
      * @param v The view to be dragged.
      */
     void onBeginDrag(View v);
-
-    void onChildDismissed(SwipeableItemView v);
-
-    void onDragCancelled(SwipeableItemView v);
 
     SwipeableItemBehindView getSwipeableItemBehindView();
 }

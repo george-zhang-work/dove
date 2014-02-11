@@ -7,11 +7,13 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 
@@ -23,14 +25,21 @@ public class SwipeHelper {
     private static final boolean DEBUG_INVALIDATE = true;
     private static final boolean LOG_SWIPE_DISMISS_VELOCITY = true;
 
+    /**
+     * The swipe orientation is horizontal.
+     */
     public static final int HORIZONTAL = 0;
+
+    /**
+     * The swipe orientation is vertical.
+     */
     public static final int VERTICAL = 1;
 
-    private static final int INVALIDATE_POSITION = -1;
     private static final boolean CONSTRAIN_SWIPE = true;
     private static final boolean FADE_OUT_DURING_SWIPE = true;
     private static final boolean DISMISS_IF_SWIPED_FAR_ENOUGH = true;
 
+    private static final int INVALIDATE_POSITION = -1;
     /**
      * The fraction is used to check the scroll is enabled or not,
      */
@@ -75,13 +84,11 @@ public class SwipeHelper {
     private float mInitialTouchPosX;
     private float mInitialTouchPosY;
 
-    public SwipeHelper(Context context, SwipeCallback swipeCallback, int swipeDiection,
-            float densityScale, float pagingTouchSlop) {
+    public SwipeHelper(Context context, SwipeCallback swipeCallback, int swipeDiection) {
         mSwipeCallback = swipeCallback;
         mSwipeDirection = swipeDiection;
-        mDensityScale = densityScale;
         mVelocityTracker = VelocityTracker.obtain();
-        mPagingTouchSlop = pagingTouchSlop;
+        onConfigurationChanged(context, null);
 
         if (SWIPE_ESCAPE_VELOCITY == -1) {
             Resources res = context.getResources();
@@ -94,12 +101,20 @@ public class SwipeHelper {
         }
     }
 
-    public void setDensityScale(float densityScale) {
-        mDensityScale = densityScale;
-    }
-
-    public void setPagingTouchSlop(float pagingTouchSlop) {
-        mPagingTouchSlop = pagingTouchSlop;
+    /**
+     * Called when the current configuration of the resources being used by the
+     * application have changed. You can use this to decide when to reload
+     * resources that can changed based on orientation and other configuration
+     * characterstics. You only need to use this if you are not relying on the
+     * normal {@link android.app.Activity} mechanism of recreating the activity
+     * instance upon a configuration change.
+     * 
+     * @param context The context used to get resources.
+     * @param newConfig The new resource configuration.
+     */
+    public void onConfigurationChanged(Context context, Configuration newConfig) {
+        mDensityScale = context.getResources().getDisplayMetrics().density;
+        mPagingTouchSlop = ViewConfiguration.get(context).getScaledPagingTouchSlop();
     }
 
     /**
@@ -179,7 +194,7 @@ public class SwipeHelper {
                         return true;
                     }
                     float deltaX = ev.getX() - mInitialTouchPosX;
-                    // If the user has gone vertical and not gone horizontalis
+                    // If the user has gone vertical and not gone horizontal
                     // AT LEAT minBeforeLock, switch to scroll. otherwise,
                     // cancel the swipe.
                     if (Math.abs(deltaX) < MIN_SWIPE) {
@@ -187,7 +202,7 @@ public class SwipeHelper {
                         // occurred.
                         return true;
                     }
-                    boolean canBeDismissed = mSwipeCallback.canChildBeDimissed(mCurItemView);
+                    boolean canBeDismissed = mSwipeCallback.canBeDimissed(mCurItemView);
                     // Don't let that can't be dismissed be dragged more than
                     // maxScrollDistance.
                     View animView = mCurItemView.getSwipeableView().getView();
@@ -238,7 +253,7 @@ public class SwipeHelper {
                     LogUtils.v(TAG, "Swipe/Dismiss: " + velocity + "/" + escapeVelocity + "/"
                             + perpendicularVelocity + ", x: " + translation + "/" + curAnimViewSize);
                 }
-                boolean dismissChild = mSwipeCallback.canChildBeDimissed(mCurItemView)
+                boolean dismissChild = mSwipeCallback.canBeDimissed(mCurItemView)
                         && (childSwipedFarEnough || childSwipedFastEnough);
 
                 if (dismissChild) {
@@ -252,10 +267,29 @@ public class SwipeHelper {
         return true;
     }
 
+    /**
+     * Get the size of a view, the view's size is measured through view's raw
+     * width for swiping orientation is horizontal or view's raw height for
+     * swiping orientation is vertical..
+     * 
+     * @param v The view to be measured.
+     * @return The view's size.
+     * @see View#getMeasuredWidth()
+     * @see View#getMeasuredHeight()
+     */
     private float getSize(View v) {
         return mSwipeDirection == HORIZONTAL ? v.getMeasuredWidth() : v.getMeasuredHeight();
     }
 
+    /**
+     * Sets the horizontal/vertical location of this view relative to its
+     * 0left/top position. The orientation is the swiping orientation.
+     * 
+     * @param v The view's to be set.
+     * @param translate The new location of the view.
+     * @see View#setTranslationX(float)
+     * @see View#setTranslationY(float)
+     */
     private void setTranslation(View v, float translate) {
         if (mSwipeDirection == HORIZONTAL) {
             v.setTranslationX(translate);
@@ -264,19 +298,37 @@ public class SwipeHelper {
         }
     }
 
+    /**
+     * Get the swipe velocity.
+     * 
+     * @param vt The {@link VelocityTracker}.
+     * @return The velocity for the specified swiping orientation.
+     */
     private float getVelocity(VelocityTracker vt) {
         return mSwipeDirection == HORIZONTAL ? vt.getXVelocity() : vt.getYVelocity();
     }
 
+    /**
+     * Get the opposite swipe velocity.
+     * 
+     * @param vt The {@link VelocityTracker}
+     * @return The velocity for the specified opposite swiping orientation.
+     */
     private float getPerpendicularVelocity(VelocityTracker vt) {
         return mSwipeDirection == HORIZONTAL ? vt.getYVelocity() : vt.getXVelocity();
     }
 
+    /**
+     * Dismiss the child view.
+     * 
+     * @param swipeableView The view to be dismissed.
+     * @param velocity The velocity of being dismissed.
+     */
     private void dismissChild(final SwipeableItemView swipeableView, float velocity) {
         final View animView = swipeableView.getSwipeableView().getView();
-        final boolean canBeDismissed = mSwipeCallback.canChildBeDimissed(swipeableView);
-        float newPos = determinePos(animView, velocity);
-        int duration = determineDuration(animView, newPos, velocity);
+        final boolean canBeDismissed = mSwipeCallback.canBeDimissed(swipeableView);
+        final float newPos = determinePos(animView, velocity);
+        final int duration = determineDuration(animView, newPos, velocity);
 
         enableHardwareLayer(animView);
 
@@ -284,7 +336,7 @@ public class SwipeHelper {
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                mSwipeCallback.onChildDismissed(swipeableView);
+                mSwipeCallback.onDismissed(swipeableView);
                 animView.setLayerType(View.LAYER_TYPE_NONE, null);
             }
         });
@@ -300,9 +352,14 @@ public class SwipeHelper {
         anim.start();
     }
 
+    /**
+     * Snap the child view swipe animation .
+     * 
+     * @param swipeableView THe view to be snapped.
+     */
     private void snapChild(final SwipeableItemView swipeableView) {
         final View animView = swipeableView.getSwipeableView().getView();
-        final boolean canBeDismissed = mSwipeCallback.canChildBeDimissed(swipeableView);
+        final boolean canBeDismissed = mSwipeCallback.canBeDimissed(swipeableView);
         final int duration = SNAP_ANIM_LEN;
 
         ObjectAnimator anim = createTranslationAnimation(animView, 0, duration);
@@ -310,7 +367,7 @@ public class SwipeHelper {
             @Override
             public void onAnimationEnd(Animator animation) {
                 animView.setAlpha(1.0f);
-                mSwipeCallback.onDragCancelled(swipeableView);
+                mSwipeCallback.onCancelled(swipeableView);
             }
         });
         anim.addUpdateListener(new AnimatorUpdateListener() {
@@ -325,6 +382,13 @@ public class SwipeHelper {
         anim.start();
     }
 
+    /**
+     * Get the new position after the animView to be dismissed.
+     * 
+     * @param animView The view to be dismissed.
+     * @param velocity The velocity of animaView being dismissed.
+     * @return The new position after the animView to be dismissed.
+     */
     private float determinePos(View animView, float velocity) {
         final float newPos;
         if (velocity < 0
@@ -337,6 +401,14 @@ public class SwipeHelper {
         return newPos;
     }
 
+    /**
+     * Get the duration after the animView to be dismissed.
+     * 
+     * @param animView The view to be dismissed.
+     * @param newPos The new position after the animView being dismissed.
+     * @param velocity The velocity of animaView being dismissed.
+     * @return The duration of the animView being dismissed.
+     */
     private static int determineDuration(View animView, float newPos, float velocity) {
         int duration = MAX_ESCAPE_ANIMATION_DURATION;
         if (velocity != 0) {
@@ -365,6 +437,8 @@ public class SwipeHelper {
     /**
      * Sets the layer type of a view to hardware if the view is attached and
      * hardware acceleration is enabled. Does nothing otherwise.
+     * 
+     * @param v The view to use hardware accelerate.
      */
     private static void enableHardwareLayer(View v) {
         if (v != null && v.isHardwareAccelerated()) {
@@ -373,6 +447,12 @@ public class SwipeHelper {
         }
     }
 
+    /**
+     * Get the view alpha during swiping.
+     * 
+     * @param view The view to be animated.
+     * @return The alpha value.
+     */
     private float getAlphaForOffset(View view) {
         float viewSize = getSize(view);
         final float fadeSize = ALPHA_FADE_END * viewSize;
@@ -400,6 +480,12 @@ public class SwipeHelper {
         return Math.max(0, result);
     }
 
+    /**
+     * When we use hardware acceleration, the view invalidate method should be
+     * called from the current view to its ancestors.
+     * 
+     * @param view The view uses hardware acceleration.
+     */
     private static void invalidateGlobalRegion(View view) {
         invalidateGlobalRegion(view,
                 new RectF(view.getLeft(), view.getTop(), view.getRight(), view.getBottom()));
