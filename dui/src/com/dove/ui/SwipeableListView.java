@@ -4,6 +4,7 @@ package com.dove.ui;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -11,8 +12,10 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
 
-public class SwipeableListView extends ListView implements SwipeCallback, OnScrollListener {
+import com.dove.log.LogUtils;
 
+public class SwipeableListView extends ListView implements SwipeCallback, OnScrollListener {
+    private static final String TAG = SwipeableListView.class.getSimpleName();
     private SwipeHelper mSwipeHelper;
     private boolean mEnableSwipe;
     private boolean mScrolling;
@@ -77,20 +80,26 @@ public class SwipeableListView extends ListView implements SwipeCallback, OnScro
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        final boolean res;
         if (mScrolling || !mEnableSwipe) {
-            return super.onInterceptTouchEvent(ev);
+            res = super.onInterceptTouchEvent(ev);
         } else {
-            return mSwipeHelper.onInterceptTouchEvent(ev) || super.onInterceptTouchEvent(ev);
+            res = mSwipeHelper.onInterceptTouchEvent(ev) || super.onInterceptTouchEvent(ev);
         }
+        Log.d(TAG, "onInterceptTouchEvent  " + ev.getAction() + " :=  " + res);
+        return res;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+        final boolean res;
         if (mEnableSwipe) {
-            return mSwipeHelper.onTouchEvent(ev) || super.onTouchEvent(ev);
+            res = mSwipeHelper.onTouchEvent(ev) || super.onTouchEvent(ev);
         } else {
-            return super.onTouchEvent(ev);
+            res = super.onTouchEvent(ev);
         }
+        Log.d(TAG, "onTouchEvent " + ev.getAction() + " := " + res);
+        return res;
     }
 
     @Override
@@ -122,7 +131,7 @@ public class SwipeableListView extends ListView implements SwipeCallback, OnScro
     public void onBeginDrag(View v) {
         // We do this so the underlying ScrollView knows that it won't get
         // the chance to intercept events anymore
-//        requestDisallowInterceptTouchEvent(true);
+        requestDisallowInterceptTouchEvent(true);
     }
 
     @Override

@@ -249,7 +249,7 @@ public class SwipeHelper {
                 break;
 
         }
-        return false;
+        return true;
     }
 
     private float getSize(View v) {
