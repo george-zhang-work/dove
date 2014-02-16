@@ -1,0 +1,22 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppBaseTheme" parent="android:Theme.Light"></style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <!-- Undo bar styles -->
+    <style name="AbstractUndoTextStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#aaaaaa</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="UndoTextStyle" parent="AbstractUndoTextStyle">
+        <item name="android:paddingRight">@dimen/undo_text_padding</item>
+    </style>
+    <!-- End undo bar styles -->
+
+</resources>
