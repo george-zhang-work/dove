@@ -1,9 +1,12 @@
 
 package com.dove.reader.ui.controller;
 
+import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.view.View;
 
 import com.dove.reader.ui.ReaderActivity;
 import com.dove.reader.ui.ViewMode;
@@ -29,6 +32,9 @@ public abstract class AbstractActivityController implements ActivityController {
     protected final ControllableActivity mActivity;
     protected final FragmentManager mFragmentManager;
 
+    protected DrawerLayout mDrawerContainer;
+    protected View mDrawerPullOut;
+
     /**
      * The current mode of the application. All changes in mode are initiated by
      * the activity controller. View mode changes are propagated to classes that
@@ -47,5 +53,16 @@ public abstract class AbstractActivityController implements ActivityController {
     public boolean onCreate(Bundle savedState) {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    /**
+     * Initialize the action bar. This is not visible to OnePaneController and
+     * TwoPaneController, so they cannot override this behavior.
+     */
+    private void initializeActionBar() {
+        final ActionBar actionBar = mActivity.getActionBar();
+        if (actionBar == null) {
+            return;
+        }
     }
 }

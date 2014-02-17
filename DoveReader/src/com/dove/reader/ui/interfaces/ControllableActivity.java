@@ -6,6 +6,6 @@ package com.dove.reader.ui.interfaces;
  * activity must be able to attach the various view fragments and delegate the
  * method calls between them.
  */
-public interface ControllableActivity {
+public interface ControllableActivity extends RestrictedActivity {
 
 }

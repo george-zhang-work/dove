@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Folder List/Drawer colors -->
+    <color name="list_background_color">#eeeeee</color>
+</resources>
