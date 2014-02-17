@@ -6,6 +6,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.StrictMode;
 
+import com.dove.reader.ui.interfaces.HelpCallback;
+import com.dove.reader.ui.interfaces.RestrictedActivity;
+
 /**
  * <p>
  * A complete Rader activity instance. This is the toplevel class that creates

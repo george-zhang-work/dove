@@ -18,11 +18,11 @@ import android.view.View;
 import android.view.Window;
 
 /**
- * {@link RestrictedActivity} gives access to a subset of {@link Activity}
+ * {@link CopyOfRestrictedActivity} gives access to a subset of {@link Activity}
  * methods. These methods match the signatures from {@link Activity}. <b>Should
  * not rely on any specific packages. </b>
  */
-public interface RestrictedActivity {
+public interface CopyOfRestrictedActivity {
     /*
      * All methods are from android.app.Activity, and the doc strings need to
      * point to the underlying methods.

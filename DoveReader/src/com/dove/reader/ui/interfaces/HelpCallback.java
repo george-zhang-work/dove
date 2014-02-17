@@ -1,5 +1,5 @@
 
-package com.dove.reader.ui;
+package com.dove.reader.ui.interfaces;
 
 /**
  * Every menu action needs to have a help string attached to it. This interface
