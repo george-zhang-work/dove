@@ -17,9 +17,14 @@ public interface ActivityController {
      * <p>
      * This was called initialize in Reader.
      * 
-     * @param savedState
-     * @return
+     * @param savedState Previous saved activity instance state, mybe null.
+     * @return true if successfully create, false otherwise.
      * @see android.app.Activity#onCreate
      */
     boolean onCreate(Bundle savedState);
+
+    /**
+     * @see android.app.Activity#onPostCreate
+     */
+    void onPostCreate(Bundle savedState);
 }

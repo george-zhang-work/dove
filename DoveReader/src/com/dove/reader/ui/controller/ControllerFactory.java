@@ -11,6 +11,7 @@ import com.dove.reader.ui.interfaces.ActivityController;
 public class ControllerFactory {
     public static ActivityController forActivity(ReaderActivity activity, ViewMode viewMode,
             boolean isTabletDevice) {
-        return /* isTabletDevice ? new TwoPaneController() : */ new OnePaneController(activity, viewMode);
+        return isTabletDevice ? new TwoPaneController(activity, viewMode) : new OnePaneController(
+                activity, viewMode);
     }
 }

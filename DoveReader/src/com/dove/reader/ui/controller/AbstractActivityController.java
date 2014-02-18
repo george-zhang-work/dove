@@ -78,6 +78,12 @@ public abstract class AbstractActivityController implements ActivityController {
         return true;
     }
 
+    @Override
+    public void onPostCreate(Bundle savedState) {
+        // Sync the toggle state after onRestoreInstanceState has occured.
+        mDrawerToggle.syncState();
+    }
+
     /**
      * Initialize the action bar. This is not visible to OnePaneController and
      * TwoPaneController, so they cannot override this behavior.
