@@ -8,4 +8,8 @@
     <string name="title_section3">Section 3</string>
     <string name="no_conversations">No conversations.</string>
 
+    <!-- Strings used for accessibility for the items that toggles the drawer action -->
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
 </resources>
