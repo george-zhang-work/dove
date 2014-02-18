@@ -1,6 +1,7 @@
 
 package com.dove.reader.ui.interfaces;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 /***
@@ -27,4 +28,9 @@ public interface ActivityController {
      * @see android.app.Activity#onPostCreate
      */
     void onPostCreate(Bundle savedState);
+    
+    /**
+     * @see android.app.Activity#onConfigurationChanged
+     */
+    void onConfigurationChanged(Configuration newConfig);
 }
