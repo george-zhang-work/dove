@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -41,6 +42,7 @@ public abstract class AbstractActivityController implements ActivityController {
     protected DrawerLayout mDrawerContainer;
     protected View mDrawerPullOut;
     protected ActionBarDrawerToggle mDrawerToggle;
+    protected ReaderDrawerListener mDrawerListener;
 
     protected ReaderActionBarView mActionBarView;
     /**
@@ -68,8 +70,12 @@ public abstract class AbstractActivityController implements ActivityController {
         // close and vice versa for the "close drawer description" argument.
         mDrawerToggle = new ActionBarDrawerToggle((Activity) mActivity, mDrawerContainer,
                 R.drawable.ic_drawer, R.string.drawer_close, R.string.drawer_open);
-
-        return false;
+        mDrawerListener = new ReaderDrawerListener();
+        mDrawerContainer.setDrawerListener(mDrawerListener);
+        mDrawerContainer.setDrawerShadow(
+                mContext.getResources().getDrawable(R.drawable.drawer_shadow), Gravity.START);
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        return true;
     }
 
     /**

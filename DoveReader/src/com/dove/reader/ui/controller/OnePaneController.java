@@ -1,9 +1,10 @@
 
 package com.dove.reader.ui.controller;
 
+import android.app.Notification;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.View;
 
 import com.dove.reader.R;
 import com.dove.reader.ui.ReaderActivity;
@@ -18,6 +19,8 @@ public class OnePaneController extends AbstractActivityController {
 
     public OnePaneController(ReaderActivity activity, ViewMode viewMode) {
         super(activity, viewMode);
+        NotificationCompat.Builder  b; 
+        Notification.Builder bb; bb.build();
     }
 
     @Override
