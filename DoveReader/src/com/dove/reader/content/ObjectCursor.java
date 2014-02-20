@@ -19,6 +19,7 @@ public class ObjectCursor<T> extends CursorWrapper {
      * The cache for objects in the underlying cursor.
      */
     private final SparseArray<T> mCache;
+
     /**
      * An object that knows how to construct T objects using cursor.
      */

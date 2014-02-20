@@ -2,7 +2,6 @@
 package com.dove.reader.ui.actionbar;
 
 import android.app.ActionBar;
-import android.app.Notification.Action;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
