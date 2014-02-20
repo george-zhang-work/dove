@@ -5,6 +5,50 @@ import android.provider.BaseColumns;
 
 public class UIProvider {
 
+    public static final class CursorStatus {
+        /**
+         * The cursor is actively loading more data.
+         */
+        public static final int LOADING = 1 << 0;
+
+        /*
+         * The cursor is currently not loading more data, but more data may be
+         * avaiable.
+         */
+        public static final int LOADED = 1 << 1;
+
+        /**
+         * The cursor finishes loading, and there will be no more data.
+         */
+        public static final int COMPLETE = 1 << 2;
+
+        /**
+         * An error occured while loading data.
+         */
+        public static final int ERROR = 1 << 3;
+    }
+
+    public static final class CursorExtraKeys {
+        /**
+         * This integer column contains the staus of the message cursor. The
+         * value will be one defined in {@link CursorStatus}.
+         */
+        public static final String EXTRA_STATUS = "cursor_status";
+
+        /**
+         * Used for finding the cause of an error.
+         */
+        public static final String EXTRA_ERROR = "cursor_error";
+
+        /**
+         * This integer column contains the total message count for this folder.
+         */
+        public static final String EXTRA_TOTAL_COUNT = "cursor_total_count";
+    }
+
+    public static final class AccountCapabilities {
+    }
+
     public static final class AccountColumns implements BaseColumns {
         /**
          * This string column contains the human visible name for the account.
@@ -53,4 +97,15 @@ public class UIProvider {
         public static final String MIME_TYPE = "mimeType";
     }
 
+    public static final class AccountType {
+    }
+
+    public static final class FolderCapabilities {
+    }
+
+    public static final class FolderColumns {
+    }
+
+    public static final class FolderType {
+    }
 }

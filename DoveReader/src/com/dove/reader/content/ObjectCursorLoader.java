@@ -7,10 +7,12 @@ import android.database.Cursor;
 import android.net.Uri;
 
 /**
- * This class main work is to parser the cursor result into object that stored
- * in {@link ObjectCursor}. Here, the reason to override the
- * {@link #loadInBackground()} is that, the parser work maybe a time consuming
- * work.
+ * This class main work is to parser the cursor result into an object that
+ * stored in {@link ObjectCursor}. Overriding the {@link #loadInBackground()} is
+ * that, the parser work may be a time consuming work. <br/>
+ * Begin with JellyBean or api Level 16, Android add CancelSignal and database
+ * query cancel function. In other words, if the user cancel some CursorLoader'a
+ * work, the read or write database work maybe canceled at the same time.
  * 
  * @param <T> the data type to be loaded.
  */
@@ -32,6 +34,10 @@ public class ObjectCursorLoader<T> extends CursorLoader {
         mFactory = factory;
     }
 
+    /**
+     * Override this class to switch the result's cursor type to ObjectCursor in
+     * Worker Thread.
+     */
     @Override
     public Cursor loadInBackground() {
         Cursor cursor = super.loadInBackground();
