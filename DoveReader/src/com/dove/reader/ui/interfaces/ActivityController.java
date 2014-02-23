@@ -4,12 +4,15 @@ package com.dove.reader.ui.interfaces;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import com.dove.reader.ui.controller.DrawerController;
+import com.dove.reader.ui.controller.FolderController;
+
 /***
  * An Activity controller knows how to combine views and listeners into a
  * functioning activity. ActivityControllers are delegate that implement methods
  * by calling underlying views to modify or respond to user action.
  */
-public interface ActivityController {
+public interface ActivityController extends FolderController, DrawerController {
 
     /**
      * Called when the root activity calls onCreate. Any initialization needs to
@@ -28,7 +31,7 @@ public interface ActivityController {
      * @see android.app.Activity#onPostCreate
      */
     void onPostCreate(Bundle savedState);
-    
+
     /**
      * @see android.app.Activity#onConfigurationChanged
      */

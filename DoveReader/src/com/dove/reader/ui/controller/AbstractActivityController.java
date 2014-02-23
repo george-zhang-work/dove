@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.DataSetObservable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -40,8 +41,8 @@ public abstract class AbstractActivityController implements ActivityController {
     protected final ControllableActivity mActivity;
     protected final FragmentManager mFragmentManager;
 
-    protected DrawerLayout mDrawerContainer;
     protected View mDrawerPullOut;
+    protected DrawerLayout mDrawerContainer;
     protected ActionBarDrawerToggle mDrawerToggle;
     protected ReaderDrawerListener mDrawerListener;
 
@@ -52,6 +53,16 @@ public abstract class AbstractActivityController implements ActivityController {
      * attach themselves as listeners of view mode chagnes.
      */
     protected final ViewMode mViewMode;
+
+    /**
+     * Listeners that are interested in changes to the current folder.
+     */
+    private final DataSetObservable mFolderObservable = new DataSetObservable();
+
+    /**
+     * Listeners that are interested in changes to the drawer state..
+     */
+    private final DataSetObservable mDrawerObservable = new DataSetObservable();
 
     public AbstractActivityController(ReaderActivity activity, ViewMode viewMode) {
         mActivity = activity;
@@ -152,6 +163,15 @@ public abstract class AbstractActivityController implements ActivityController {
             mDrawerState = newState;
             mDrawerToggle.onDrawerStateChanged(newState);
         }
+    }
 
+    @Override
+    public DataSetObservable getDrawerObserverable() {
+        return mDrawerObservable;
+    }
+
+    @Override
+    public DataSetObservable getFolderObserverable() {
+        return mFolderObservable;
     }
 }

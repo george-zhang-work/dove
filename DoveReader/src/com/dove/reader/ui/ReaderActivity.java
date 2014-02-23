@@ -4,6 +4,8 @@ package com.dove.reader.ui;
 import android.os.Bundle;
 
 import com.dove.reader.ui.controller.ControllerFactory;
+import com.dove.reader.ui.controller.DrawerController;
+import com.dove.reader.ui.controller.FolderController;
 import com.dove.reader.ui.interfaces.ActivityController;
 import com.dove.reader.ui.interfaces.ControllableActivity;
 import com.dove.reader.utils.Utils;
@@ -35,5 +37,15 @@ public class ReaderActivity extends AbstractReaderActivity implements Controllab
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mController.onPostCreate(savedInstanceState);
+    }
+
+    @Override
+    public DrawerController getDrawerController() {
+        return mController;
+    }
+
+    @Override
+    public FolderController getFolderController() {
+        return mController;
     }
 }

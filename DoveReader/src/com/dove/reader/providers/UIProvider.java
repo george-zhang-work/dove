@@ -107,5 +107,9 @@ public class UIProvider {
     }
 
     public static final class FolderType {
+        /**
+         * Non existent item or folder type not yet set.
+         */
+        public static final int UNSET = 1 << 0;
     }
 }
