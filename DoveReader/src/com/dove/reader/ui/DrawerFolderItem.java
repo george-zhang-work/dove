@@ -2,7 +2,6 @@
 package com.dove.reader.ui;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,13 +14,13 @@ public class DrawerFolderItem extends DrawerItem {
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+    public View newView(Context context, ViewGroup parent) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(Context context, View view) {
         // TODO Auto-generated method stub
 
     }

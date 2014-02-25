@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.CursorAdapter;
 
 import com.dove.reader.content.ObjectCursor;
@@ -26,6 +27,7 @@ import com.dove.reader.ui.controller.FolderController;
 import com.dove.reader.ui.interfaces.ControllableActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A drawer that is shown in one pane mode, as a pull-out from the left.
@@ -232,35 +234,50 @@ public class DrawerFragment extends ListFragment implements LoaderCallbacks<Obje
 
     @Override
     public void onLoaderReset(Loader<ObjectCursor<Folder>> loader) {
-        // TODO Auto-generated method stub
+        // TODO Auto-generated method stubxcx
 
     }
 
-    static class DrawerAdapter extends CursorAdapter {
+    static class DrawerAdapter extends BaseAdapter {
 
-        public DrawerAdapter(Context context, Cursor c, int flags) {
-            super(context, c, flags);
-        }
-
-        @SuppressWarnings("unchecked")
-        public ObjectCursor<Folder> getObjectCursor() {
-            final Cursor cursor = getCursor();
-            if (cursor instanceof ObjectCursor<?>) {
-                return (ObjectCursor<Folder>) cursor;
-            }
-            return null;
-        }
+        /**
+         * The adapter binded data.
+         */
+        private List<DrawerItem> mItemList = new ArrayList<DrawerItem>();
 
         @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            final DrawerItem drawerItem = (DrawerItem) getItem(position);
+            final View view = drawerItem.getView(convertView, parent);
+            return view;
+        }
+
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             // View.inflate(context, resource, root)
             return null;
         }
 
-        @Override
         public void bindView(View view, Context context, Cursor cursor) {
             // TODO Auto-generated method stub
 
+        }
+
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return 0;
         }
 
     }

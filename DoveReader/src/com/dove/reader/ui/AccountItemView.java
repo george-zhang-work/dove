@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dove.reader.R;
+import com.dove.reader.providers.Account;
 
 public class AccountItemView extends RelativeLayout {
     private TextView mAccountTextView;
@@ -45,8 +46,7 @@ public class AccountItemView extends RelativeLayout {
      *            otherwise
      * @param count unread count
      */
-    public void bind(final com.dove.reader.providers.Account account,
-            final boolean isCurrentAccount, final int count) {
+    public void bind(final Account account, final boolean isCurrentAccount, final int count) {
         mAccountTextView.setText(account.getDisplayName());
         setUnreadCount(count);
         mUnreadCountTextView.setSelected(isCurrentAccount);
