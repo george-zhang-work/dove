@@ -1,6 +1,7 @@
 
 package com.dove.reader.ui.interfaces;
 
+import com.dove.reader.ui.controller.AccountController;
 import com.dove.reader.ui.controller.DrawerController;
 import com.dove.reader.ui.controller.FolderController;
 
@@ -10,6 +11,13 @@ import com.dove.reader.ui.controller.FolderController;
  * method calls between them.
  */
 public interface ControllableActivity extends RestrictedActivity {
+
+    /**
+     * @return The {@link AccountController} object associated with this
+     *         activity, if any.
+     */
+    AccountController getAccountController();
+
     /**
      * @return The {@link DrawerController} object associated with this
      *         activity, if any.

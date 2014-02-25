@@ -16,12 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CursorAdapter;
+import android.widget.ListView;
 
 import com.dove.reader.content.ObjectCursor;
 import com.dove.reader.log.LogTag;
 import com.dove.reader.log.LogUtils;
 import com.dove.reader.providers.Folder;
 import com.dove.reader.providers.UIProvider.FolderType;
+import com.dove.reader.ui.controller.AccountController;
 import com.dove.reader.ui.controller.DrawerController;
 import com.dove.reader.ui.controller.FolderController;
 import com.dove.reader.ui.interfaces.ControllableActivity;
@@ -31,6 +33,9 @@ import java.util.List;
 
 /**
  * A drawer that is shown in one pane mode, as a pull-out from the left.
+ */
+/**
+ * @author LBoy
  */
 public class DrawerFragment extends ListFragment implements LoaderCallbacks<ObjectCursor<Folder>> {
     private static final String LOG_TAG = LogTag.getLogTag();
@@ -75,6 +80,11 @@ public class DrawerFragment extends ListFragment implements LoaderCallbacks<Obje
      * {@link #mSelectedFolderUri} type.
      */
     private int mSelectedFolderType = FolderType.UNSET;
+
+    /**
+     * Observer to be notified when the selected account changed.
+     */
+    private DataSetObserver mAccountObserver;
 
     /**
      * Observer to be notified when the selected folder changed.
@@ -173,11 +183,21 @@ public class DrawerFragment extends ListFragment implements LoaderCallbacks<Obje
                 mSelectedFolderType = savedState.getInt(BUNDLE_SELECTED_TYPE);
             }
         }
+        getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
     @Override
     public void onActivityCreated(Bundle savedState) {
         super.onActivityCreated(savedState);
+
+        final AccountController accountController = mActivity.getAccountController();
+        mAccountObserver = new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+            }
+        };
+        accountController.getFolderObserverable().registerObserver(mAccountObserver);
 
         final FolderController folderController = mActivity.getFolderController();
         mFolderObserver = new DataSetObserver() {
@@ -195,6 +215,11 @@ public class DrawerFragment extends ListFragment implements LoaderCallbacks<Obje
             }
         };
         drawerController.getDrawerObserverable().registerObserver(mDrawerObserver);
+
+        if (mActivity.isFinishing()) {
+            // Activity is finished, just bail.
+            return;
+        }
     }
 
     @Override

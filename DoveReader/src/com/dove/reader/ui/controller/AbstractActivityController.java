@@ -4,8 +4,10 @@ package com.dove.reader.ui.controller;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
 import android.content.res.Configuration;
 import android.database.DataSetObservable;
 import android.os.Bundle;
@@ -16,6 +18,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.dove.reader.R;
+import com.dove.reader.content.CursorCreator;
+import com.dove.reader.content.ObjectCursor;
+import com.dove.reader.content.ObjectCursorLoader;
+import com.dove.reader.log.LogTag;
+import com.dove.reader.log.LogUtils;
+import com.dove.reader.providers.Account;
 import com.dove.reader.ui.ReaderActivity;
 import com.dove.reader.ui.ViewMode;
 import com.dove.reader.ui.actionbar.ReaderActionBarView;
@@ -36,6 +44,19 @@ import com.dove.reader.ui.interfaces.ControllableActivity;
  * <p>
  */
 public abstract class AbstractActivityController implements ActivityController {
+    protected static final String LOG_TAG = LogTag.getLogTag();
+
+    /**
+     * The list of accounts. This loader is started early in the application
+     * life-cycle since the list of accounts is central to all other data the //
+     * application needs. <br/>
+     * The loader is started when the application is created: both in
+     * {@link #onCreate(Bundle)} and in
+     * {@link #onActivityResult(int, int, Intent)}. It it never destroyed since
+     * the cursor is need through the life of the application. When the list of
+     * accounts changes, we notifiy {@link #mAccountObservable}
+     */
+    private static final int LOADER_ACCOUNT_CURSOR = 0;
 
     protected final Context mContext;
     protected final ControllableActivity mActivity;
@@ -47,6 +68,7 @@ public abstract class AbstractActivityController implements ActivityController {
     protected ReaderDrawerListener mDrawerListener;
 
     protected ReaderActionBarView mActionBarView;
+
     /**
      * The current mode of the application. All changes in mode are initiated by
      * the activity controller. View mode changes are propagated to classes that
@@ -54,6 +76,10 @@ public abstract class AbstractActivityController implements ActivityController {
      */
     protected final ViewMode mViewMode;
 
+    /**
+     * Listeners that are interested in changes to the current account.
+     */
+    private final DataSetObservable mAccountObservable = new DataSetObservable();
     /**
      * Listeners that are interested in changes to the current folder.
      */
@@ -166,6 +192,11 @@ public abstract class AbstractActivityController implements ActivityController {
     }
 
     @Override
+    public DataSetObservable getAccountObservable() {
+        return mAccountObservable;
+    }
+
+    @Override
     public DataSetObservable getDrawerObserverable() {
         return mDrawerObservable;
     }
@@ -173,5 +204,30 @@ public abstract class AbstractActivityController implements ActivityController {
     @Override
     public DataSetObservable getFolderObserverable() {
         return mFolderObservable;
+    }
+
+    private class AccountCallback implements LoaderManager.LoaderCallbacks<ObjectCursor<Account>> {
+        @Override
+        public Loader<ObjectCursor<Account>> onCreateLoader(int id, Bundle args) {
+            switch (id) {
+                case LOADER_ACCOUNT_CURSOR:
+                    LogUtils.d(LOG_TAG, "LOADER_ACCOUNT_CURSOR");
+//                    return new ObjectCursorLoader<T>(mContext, Account.FACTORY);
+            }
+            return null;
+        }
+
+        @Override
+        public void onLoadFinished(Loader<ObjectCursor<Account>> loader, ObjectCursor<Account> data) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void onLoaderReset(Loader<ObjectCursor<Account>> loader) {
+            // TODO Auto-generated method stub
+
+        }
+
     }
 }

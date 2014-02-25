@@ -1,9 +1,11 @@
 
 package com.dove.reader.ui.interfaces;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import com.dove.reader.ui.controller.AccountController;
 import com.dove.reader.ui.controller.DrawerController;
 import com.dove.reader.ui.controller.FolderController;
 
@@ -12,7 +14,7 @@ import com.dove.reader.ui.controller.FolderController;
  * functioning activity. ActivityControllers are delegate that implement methods
  * by calling underlying views to modify or respond to user action.
  */
-public interface ActivityController extends FolderController, DrawerController {
+public interface ActivityController extends AccountController, FolderController, DrawerController {
 
     /**
      * Called when the root activity calls onCreate. Any initialization needs to
@@ -36,4 +38,9 @@ public interface ActivityController extends FolderController, DrawerController {
      * @see android.app.Activity#onConfigurationChanged
      */
     void onConfigurationChanged(Configuration newConfig);
+
+    /**
+     * @see android.app.Activity#onActivityResult
+     */
+    void onActivityResult(int requestCode, int resultCode, Intent data);
 }
