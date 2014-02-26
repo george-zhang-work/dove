@@ -1,0 +1,14 @@
+<resources>
+
+    <dimen name="drawer_width">300dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="undo_text_padding">16dip</dimen>
+    <dimen name="account_item_left_margin">14dp</dimen>
+    <dimen name="account_item_right_margin">8dp</dimen>
+    <dimen name="account_item_minimum_height">48dip</dimen>
+    <dimen name="account_item_swatch_height">8dip</dimen>
+    <dimen name="account_item_folder_color_width">36dip</dimen>
+
+</resources>
