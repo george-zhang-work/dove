@@ -1,12 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <color name="dark_gray_text_color">#58585b</color>
-    <!-- if you want to make something blue, please try to use THIS blue -->
-    <color name="reader_app_blue">@android:color/holo_blue_light</color>
-    <!-- Folder List/Drawer colors -->
-    <color name="list_background_color">#eeeeee</color>
-    <!-- Folder colors -->
-    <color name="folder_disabled_drop_target_text_color">#999999</color>
-    <color name="account_item_selected_text_color">@color/reader_app_blue</color>
-</resources>
