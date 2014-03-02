@@ -1,5 +1,5 @@
 
-package com.dove.common;
+package com.dove.common.content;
 
 import java.util.Arrays;
 import java.util.HashMap;
