@@ -65,6 +65,11 @@ public class Account implements Parcelable {
     public final String mimeType;
 
     /**
+     * Settings object for account.
+     */
+    public final Settings settings;
+
+    /**
      * Return a serialized String for this account.
      */
     public synchronized String serialize() {
@@ -208,31 +213,24 @@ public class Account implements Parcelable {
         }
 
         final Account other = (Account) o;
-        return TextUtils.equals(name, other.name) 
-                && TextUtils.equals(readerName, other.readerName)
+        return TextUtils.equals(name, other.name) && TextUtils.equals(readerName, other.readerName)
                 && TextUtils.equals(accountManagerName, other.accountManagerName)
-                && TextUtils.equals(type, other.type) 
-                && capabilities == other.capabilities
-                && providerVersion == other.providerVersion 
-                && Objects.equal(uri, other.uri)
+                && TextUtils.equals(type, other.type) && capabilities == other.capabilities
+                && providerVersion == other.providerVersion && Objects.equal(uri, other.uri)
                 && TextUtils.equals(mimeType, other.mimeType);
 
     }
+
     @Override
     public int hashCode() {
-        return Objects.hashCode(name,
-                readerName,
-                accountManagerName,
-                type,
-                capabilities,
-                providerVersion,
-                uri,
-                mimeType);
+        return Objects.hashCode(name, readerName, accountManagerName, type, capabilities,
+                providerVersion, uri, mimeType);
     }
 
     /**
      * Returns whether two Accounts match, as determined by their base URIs.
-     * <p>For a deep object comparison, use {@link #equals(Object)}.
+     * <p>
+     * For a deep object comparison, use {@link #equals(Object)}.
      */
     public boolean matches(Account other) {
         return other != null && Objects.equal(uri, other.uri);
@@ -257,6 +255,7 @@ public class Account implements Parcelable {
 
     /**
      * Get Human readable account name.
+     * 
      * @return The account display name.
      */
     public String getDisplayName() {
@@ -264,8 +263,9 @@ public class Account implements Parcelable {
     }
 
     /**
-     * Returns the real name associated with the account, e.g. "John Doe" or null if no such name
-     * has been configured
+     * Returns the real name associated with the account, e.g. "John Doe" or
+     * null if no such name has been configured
+     * 
      * @return reader name
      */
     public String getReaderName() {

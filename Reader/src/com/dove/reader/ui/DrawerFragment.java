@@ -197,7 +197,7 @@ public class DrawerFragment extends ListFragment implements LoaderCallbacks<Obje
                 super.onChanged();
             }
         };
-        accountController.getFolderObserverable().registerObserver(mAccountObserver);
+        accountController.getAccountObservable().registerObserver(mAccountObserver);
 
         final FolderController folderController = mActivity.getFolderController();
         mFolderObserver = new DataSetObserver() {

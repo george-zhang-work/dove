@@ -95,6 +95,10 @@ public class UIProvider {
          * Mime-type defining this account.
          */
         public static final String MIME_TYPE = "mimeType";
+
+        public static final class SettingsColumns {
+
+        }
     }
 
     public static final class AccountType {

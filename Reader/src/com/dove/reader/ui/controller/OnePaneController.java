@@ -27,4 +27,5 @@ public class OnePaneController extends AbstractActivityController {
         mDrawerPullOut.setBackgroundResource(R.color.list_background_color);
         return super.onCreate(savedState);
     }
+
 }

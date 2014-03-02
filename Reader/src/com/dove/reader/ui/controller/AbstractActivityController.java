@@ -127,6 +127,10 @@ public abstract class AbstractActivityController implements ActivityController {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    }
+
     /**
      * Initialize the action bar. This is not visible to OnePaneController and
      * TwoPaneController, so they cannot override this behavior.
@@ -212,7 +216,8 @@ public abstract class AbstractActivityController implements ActivityController {
             switch (id) {
                 case LOADER_ACCOUNT_CURSOR:
                     LogUtils.d(LOG_TAG, "LOADER_ACCOUNT_CURSOR");
-                    return new ObjectCursorLoader<T>(mContext, Account.FACTORY);
+                    // return new ObjectCursorLoader<T>(mContext,
+                    // Account.FACTORY);
             }
             return null;
         }

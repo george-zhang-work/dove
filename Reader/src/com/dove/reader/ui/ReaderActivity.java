@@ -3,6 +3,7 @@ package com.dove.reader.ui;
 
 import android.os.Bundle;
 
+import com.dove.reader.ui.controller.AccountController;
 import com.dove.reader.ui.controller.ControllerFactory;
 import com.dove.reader.ui.controller.DrawerController;
 import com.dove.reader.ui.controller.FolderController;
@@ -40,6 +41,11 @@ public class ReaderActivity extends AbstractReaderActivity implements Controllab
     }
 
     @Override
+    public AccountController getAccountController() {
+        return mController;
+    }
+
+    @Override
     public DrawerController getDrawerController() {
         return mController;
     }
@@ -48,4 +54,5 @@ public class ReaderActivity extends AbstractReaderActivity implements Controllab
     public FolderController getFolderController() {
         return mController;
     }
+
 }
