@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.dove.common.test" >
+
+    <application android:label="Tests for Common" >
+        <uses-library android:name="android.test.runner" />
+    </application>
+    <!--
+    This declares that this app uses the instrumentation test runner targeting
+    the package of com.dove.reader. To run the tests use the command:
+    "adb shell am instrument -w com.dove.common.tests/android.test.InstrumentationTestRunner"    -->
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:targetPackage="com.dove.reader" />
+
+</manifest>
