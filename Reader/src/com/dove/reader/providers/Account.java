@@ -67,7 +67,7 @@ public class Account implements Parcelable {
     /**
      * Settings object for account.
      */
-    public final Settings settings;
+    public final Settings settings = null;
 
     /**
      * Return a serialized String for this account.
