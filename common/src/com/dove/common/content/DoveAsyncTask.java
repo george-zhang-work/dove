@@ -1,11 +1,17 @@
 
 package com.dove.common.content;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
-
 import java.util.LinkedList;
 import java.util.concurrent.Executor;
 
+/**
+ * This class has the same usage with {@link AsyncTask}, but has an extra
+ * features: <em>-Bulk cancellation of multiple tasks</em>.
+ * @see AsyncTask
+ */
+@SuppressLint("InlinedApi")
 public abstract class DoveAsyncTask<Params, Progress, Result> extends
         AsyncTask<Params, Progress, Result> {
     /**
