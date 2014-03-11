@@ -3,18 +3,16 @@ package com.dove.common.content;
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
-<<<<<<< HEAD
-=======
 import android.os.Handler;
 import android.os.Message;
 
->>>>>>> 2d0fde4ad60e2894bb54e65bcc11ca147519aaf0
 import java.util.LinkedList;
 import java.util.concurrent.Executor;
 
 /**
  * This class has the same usage with {@link AsyncTask}, but has an extra
  * features: <em>-Bulk cancellation of multiple tasks</em>.
+ * 
  * @see AsyncTask
  */
 @SuppressLint("InlinedApi")
