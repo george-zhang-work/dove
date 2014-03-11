@@ -3,6 +3,12 @@ package com.dove.common.content;
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
+<<<<<<< HEAD
+=======
+import android.os.Handler;
+import android.os.Message;
+
+>>>>>>> 2d0fde4ad60e2894bb54e65bcc11ca147519aaf0
 import java.util.LinkedList;
 import java.util.concurrent.Executor;
 
@@ -60,6 +66,11 @@ public abstract class DoveAsyncTask<Params, Progress, Result> extends
             }
         }
     }
+
+    private static final int MESSAGE_DELAY_PARALLEL_RUNNABLE = 0X01;
+    private static final int MESSAGE_DELAY_SERIAL_RUNNABLE = 0X02;
+
+    private static final InternalHandler sHandler = new InternalHandler();
 
     /**
      * Record the current working tasks.
@@ -132,6 +143,8 @@ public abstract class DoveAsyncTask<Params, Progress, Result> extends
      * @see DoveAsyncTask#cancelAndExecuteSerial(Object...)
      * @see DoveAsyncTask#executeParallel(Runnable)
      * @see DoveAsyncTask#executeSerial(Runnable)
+     * @see DoveAsyncTask#executeParallel(Runnable, long)
+     * @see DoveAsyncTask#executeSerial(Runnable, long)
      */
     public final DoveAsyncTask<Params, Progress, Result> executeParallel(Params... params) {
         return execute(AsyncTask.THREAD_POOL_EXECUTOR, false, params);
@@ -155,6 +168,8 @@ public abstract class DoveAsyncTask<Params, Progress, Result> extends
      * @see DoveAsyncTask#cancelAndExecuteSerial(Object...)
      * @see DoveAsyncTask#executeParallel(Runnable)
      * @see DoveAsyncTask#executeSerial(Runnable)
+     * @see DoveAsyncTask#executeParallel(Runnable, long)
+     * @see DoveAsyncTask#executeSerial(Runnable, long)
      */
     public final DoveAsyncTask<Params, Progress, Result> cancelAndExecuteParallel(Params... params) {
         return execute(AsyncTask.THREAD_POOL_EXECUTOR, true, params);
@@ -177,6 +192,8 @@ public abstract class DoveAsyncTask<Params, Progress, Result> extends
      * @see DoveAsyncTask#cancelAndExecuteSerial(Object...)
      * @see DoveAsyncTask#executeParallel(Runnable)
      * @see DoveAsyncTask#executeSerial(Runnable)
+     * @see DoveAsyncTask#executeParallel(Runnable, long)
+     * @see DoveAsyncTask#executeSerial(Runnable, long)
      */
     public final DoveAsyncTask<Params, Progress, Result> executeSerial(Params... params) {
         return execute(AsyncTask.SERIAL_EXECUTOR, false, params);
@@ -200,6 +217,8 @@ public abstract class DoveAsyncTask<Params, Progress, Result> extends
      * @see DoveAsyncTask#cancelAndExecuteParallel(Object...)
      * @see DoveAsyncTask#executeParallel(Runnable)
      * @see DoveAsyncTask#executeSerial(Runnable)
+     * @see DoveAsyncTask#executeParallel(Runnable, long)
+     * @see DoveAsyncTask#executeSerial(Runnable, long)
      */
     public final DoveAsyncTask<Params, Progress, Result> cancelAndExecuteSerial(Params... params) {
         return execute(AsyncTask.SERIAL_EXECUTOR, true, params);
@@ -230,9 +249,29 @@ public abstract class DoveAsyncTask<Params, Progress, Result> extends
      * @see DoveAsyncTask#cancelAndExecuteParallel(Object...)
      * @see DoveAsyncTask#cancelAndExecuteSerial(Object...)
      * @see DoveAsyncTask#executeSerial(Runnable)
+     * @see DoveAsyncTask#executeParallel(Runnable, long)
+     * @see DoveAsyncTask#executeSerial(Runnable, long)
      */
     public static void executeParallel(Runnable runnable) {
         execute(AsyncTask.THREAD_POOL_EXECUTOR, runnable);
+    }
+
+    /**
+     * Execute the runnable in parallel order with delayed time milliseconds.
+     * 
+     * @param runnable A {@link Runnable} to be executed.
+     * @param delayMillis Time in milliseconds before the runnable been
+     *            executed, but without accuracy.
+     * @see DoveAsyncTask#executeParallel(Object...)
+     * @see DoveAsyncTask#executeSerial(Object...)
+     * @see DoveAsyncTask#cancelAndExecuteParallel(Object...)
+     * @see DoveAsyncTask#cancelAndExecuteSerial(Object...)
+     * @see DoveAsyncTask#executeSerial(Runnable)
+     * @see DoveAsyncTask#executeSerial(Runnable, long)
+     */
+    public static void executeParallel(Runnable runnable, long delayMillis) {
+        final Message msg = sHandler.obtainMessage(MESSAGE_DELAY_PARALLEL_RUNNABLE, runnable);
+        sHandler.sendMessageDelayed(msg, delayMillis);
     }
 
     /**
@@ -244,12 +283,47 @@ public abstract class DoveAsyncTask<Params, Progress, Result> extends
      * @see DoveAsyncTask#cancelAndExecuteParallel(Object...)
      * @see DoveAsyncTask#cancelAndExecuteSerial(Object...)
      * @see DoveAsyncTask#executeParallel(Runnable)
+     * @see DoveAsyncTask#executeParallel(Runnable, long)
+     * @see DoveAsyncTask#executeSerial(Runnable, long)
      */
     public static void executeSerial(Runnable runnable) {
         execute(AsyncTask.SERIAL_EXECUTOR, runnable);
     }
 
+    /**
+     * Execute the runnable in serial order with delayed time milliseconds.
+     * 
+     * @param runnable A {@link Runnable} to be executed.
+     * @param delayMillis Time in milliseconds before the runnable been
+     *            executed, but without accuracy.
+     * @see DoveAsyncTask#executeParallel(Object...)
+     * @see DoveAsyncTask#executeSerial(Object...)
+     * @see DoveAsyncTask#cancelAndExecuteParallel(Object...)
+     * @see DoveAsyncTask#cancelAndExecuteSerial(Object...)
+     * @see DoveAsyncTask#executeParallel(Runnable)
+     * @see DoveAsyncTask#executeParallel(Runnable, long)
+     */
+    public static void executeSerial(Runnable runnable, long delayMillis) {
+        final Message msg = sHandler.obtainMessage(MESSAGE_DELAY_SERIAL_RUNNABLE, runnable);
+        sHandler.sendMessageDelayed(msg, delayMillis);
+    }
+
     private static void execute(Executor executor, final Runnable runnable) {
         executor.execute(runnable);
+    }
+
+    private static class InternalHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            final Runnable runnable = (Runnable) msg.obj;
+            switch (msg.what) {
+                case MESSAGE_DELAY_PARALLEL_RUNNABLE:
+                    execute(THREAD_POOL_EXECUTOR, runnable);
+                    break;
+                case MESSAGE_DELAY_SERIAL_RUNNABLE:
+                    execute(SERIAL_EXECUTOR, runnable);
+                    break;
+            }
+        }
     }
 }
