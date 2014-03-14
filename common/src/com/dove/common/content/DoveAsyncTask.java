@@ -239,7 +239,8 @@ public abstract class DoveAsyncTask<Params, Progress, Result> extends
     }
 
     /**
-     * Execute the runnable in parallel order.
+     * Execute the runnable in parallel order. <em>For simple use, use
+     * {@link AsyncHandler#post(Runnable)} instead. </em>
      * 
      * @param runnable A {@link Runnable} to be executed.
      * @see DoveAsyncTask#executeParallel(Object...)
@@ -256,6 +257,8 @@ public abstract class DoveAsyncTask<Params, Progress, Result> extends
 
     /**
      * Execute the runnable in parallel order with delayed time milliseconds.
+     * <em>For simple use, use
+     * {@link AsyncHandler#postDelayed(Runnable, long)} instead. </em>
      * 
      * @param runnable A {@link Runnable} to be executed.
      * @param delayMillis Time in milliseconds before the runnable been
@@ -266,6 +269,7 @@ public abstract class DoveAsyncTask<Params, Progress, Result> extends
      * @see DoveAsyncTask#cancelAndExecuteSerial(Object...)
      * @see DoveAsyncTask#executeSerial(Runnable)
      * @see DoveAsyncTask#executeSerial(Runnable, long)
+     * @see AsyncHandler#postDelayed(Runnable, long)
      */
     public static void executeParallel(Runnable runnable, long delayMillis) {
         final Message msg = sHandler.obtainMessage(MESSAGE_DELAY_PARALLEL_RUNNABLE, runnable);
@@ -273,7 +277,8 @@ public abstract class DoveAsyncTask<Params, Progress, Result> extends
     }
 
     /**
-     * Execute the runnable in serial order.
+     * Execute the runnable in serial order. <em>For simple use, use
+     * {@link AsyncHandler#post(Runnable)} instead. </em>
      * 
      * @param runnable A {@link Runnable} to be executed.
      * @see DoveAsyncTask#executeParallel(Object...)
@@ -283,6 +288,7 @@ public abstract class DoveAsyncTask<Params, Progress, Result> extends
      * @see DoveAsyncTask#executeParallel(Runnable)
      * @see DoveAsyncTask#executeParallel(Runnable, long)
      * @see DoveAsyncTask#executeSerial(Runnable, long)
+     * @see AsyncHandler#post(Runnable)
      */
     public static void executeSerial(Runnable runnable) {
         execute(AsyncTask.SERIAL_EXECUTOR, runnable);
@@ -290,6 +296,8 @@ public abstract class DoveAsyncTask<Params, Progress, Result> extends
 
     /**
      * Execute the runnable in serial order with delayed time milliseconds.
+     * <em>For simple use, use
+     * {@link AsyncHandler#postDelayed(Runnable, long)} instead. </em>
      * 
      * @param runnable A {@link Runnable} to be executed.
      * @param delayMillis Time in milliseconds before the runnable been
@@ -300,6 +308,7 @@ public abstract class DoveAsyncTask<Params, Progress, Result> extends
      * @see DoveAsyncTask#cancelAndExecuteSerial(Object...)
      * @see DoveAsyncTask#executeParallel(Runnable)
      * @see DoveAsyncTask#executeParallel(Runnable, long)
+     * @see AsyncHandler#postDelayed(Runnable, long)
      */
     public static void executeSerial(Runnable runnable, long delayMillis) {
         final Message msg = sHandler.obtainMessage(MESSAGE_DELAY_SERIAL_RUNNABLE, runnable);
