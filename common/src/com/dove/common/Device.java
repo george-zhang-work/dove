@@ -1,6 +1,7 @@
 
 package com.dove.common;
 
+import android.app.AlarmManager;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -17,9 +18,21 @@ import java.io.IOException;
 public final class Device {
     private static String sDeviceId = null;
 
-    public static synchronized String getDeviceId(Context context) throws IOException {
+    /**
+     * Try to get
+     * 
+     * @param context
+     * @return
+     * @throws IOException
+     */
+    public static String getDeviceId(Context context) throws IOException {
         if (sDeviceId == null) {
-            sDeviceId = getDeviceIdInternal(context);
+            synchronized (Device.class) {
+                if (sDeviceId == null) {
+                    sDeviceId = getDeviceIdInternal(context);
+                }
+                AlarmManager a;
+            }
         }
         return sDeviceId;
     }
