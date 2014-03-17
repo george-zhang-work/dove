@@ -23,17 +23,17 @@ public final class Alarm implements Parcelable, AlarmColumns {
     /**
      * True if alarm is active.
      */
-    public boolean enabled;
+    public final boolean enabled;
 
     /**
      * Hour in 24-hour localtime 0 - 23.
      */
-    public int hour;
+    public final int hour;
 
     /**
      * Minutes in localtime 0 - 59.
      */
-    public int minutes;
+    public final int minutes;
 
     /**
      * Days of week code as a single int.
@@ -61,6 +61,9 @@ public final class Alarm implements Parcelable, AlarmColumns {
     public Alarm(Cursor cursor) {
         id = cursor.getLong(cursor.getColumnIndex(AlarmColumns._ID));
         type = cursor.getInt(cursor.getColumnIndex(AlarmColumns.TYPE));
+        enabled = cursor.getInt(cursor.getColumnIndex(AlarmColumns.ENABLED)) != 0;
+        hour = cursor.getInt(cursor.getColumnIndex(AlarmContract.AlarmColumns.HOUR));
+        minutes = cursor.getInt(cursor.getColumnIndex(AlarmContract.AlarmColumns.MINUTES));
     }
 
     public Alarm(Parcel in) {
