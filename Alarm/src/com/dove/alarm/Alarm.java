@@ -1,4 +1,3 @@
-
 package com.dove.alarm;
 
 import android.database.Cursor;
@@ -10,121 +9,123 @@ import com.dove.alarm.AlarmContract.AlarmColumns;
 import com.dove.alarm.AlarmContract.AlarmType;
 
 public final class Alarm implements Parcelable, AlarmColumns {
-    /**
-     * The unique ID for a alarm.
-     */
-    public final long id;
+	/**
+	 * The unique ID for a alarm.
+	 */
+	public final long id;
 
-    /**
-     * Alarm type defined in {@link AlarmType}
-     */
-    public final int type;
+	/**
+	 * Alarm type defined in {@link AlarmType}
+	 */
+	public final int type;
 
-    /**
-     * True if alarm is active.
-     */
-    public final boolean enabled;
+	/**
+	 * True if alarm is active.
+	 */
+	public final boolean enabled;
 
-    /**
-     * Hour in 24-hour localtime 0 - 23.
-     */
-    public final int hour;
+	/**
+	 * Hour in 24-hour localtime 0 - 23.
+	 */
+	public final int hour;
 
-    /**
-     * Minutes in localtime 0 - 59.
-     */
-    public final int minutes;
+	/**
+	 * Minutes in localtime 0 - 59.
+	 */
+	public final int minutes;
 
-    /**
-     * Days of week code as a single int.
-     * <ul>
-     * <li>0x00: no day</li>
-     * <li>0x01: Monday</li>
-     * <li>0x02: Tuesday</li>
-     * <li>0x04: Wednesday</li>
-     * <li>0x08: Thursday</li>
-     * <li>0x10: Friday</li>
-     * <li>0x20: Saturday</li>
-     * <li>0x40: Sunday</li>
-     * </ul>
-     */
-    public int days;
+	/**
+	 * Days of week code as a single int.
+	 * <ul>
+	 * <li>0x00: no day</li>
+	 * <li>0x01: Monday</li>
+	 * <li>0x02: Tuesday</li>
+	 * <li>0x04: Wednesday</li>
+	 * <li>0x08: Thursday</li>
+	 * <li>0x10: Friday</li>
+	 * <li>0x20: Saturday</li>
+	 * <li>0x40: Sunday</li>
+	 * </ul>
+	 */
+	public final int days;
+	public final boolean vibrate;
 
-    public boolean vibrate;
+	public String label;
+	public Uri alert;
+	public boolean silent;
 
-    public long time;
+	public Alarm(Cursor cursor) {
+		id = cursor.getLong(cursor.getColumnIndex(AlarmColumns._ID));
+		type = cursor.getInt(cursor.getColumnIndex(AlarmColumns.TYPE));
+		enabled = cursor.getInt(cursor.getColumnIndex(AlarmColumns.ENABLED)) != 0;
+		hour = cursor.getInt(cursor
+				.getColumnIndex(AlarmContract.AlarmColumns.HOUR));
+		minutes = cursor.getInt(cursor
+				.getColumnIndex(AlarmContract.AlarmColumns.MINUTES));
+		days = cursor.getInt(cursor
+				.getColumnIndex(AlarmContract.AlarmColumns.DAYS));
+		vibrate = cursor.getInt(cursor
+				.getColumnIndex(AlarmContract.AlarmColumns.VIBRATE)) != 0;
+	}
 
-    public String label;
-    public Uri alert;
-    public boolean silent;
+	public Alarm(Parcel in) {
+		id = in.readLong();
+		type = in.readInt();
+		enabled = in.readInt() == 1;
+		hour = in.readInt();
+		minutes = in.readInt();
+		days = in.readInt();
+		vibrate = in.readInt() == 1;
+		label = in.readString();
+		alert = (Uri) in.readParcelable(null);
+		silent = in.readInt() == 1;
+	}
 
-    public Alarm(Cursor cursor) {
-        id = cursor.getLong(cursor.getColumnIndex(AlarmColumns._ID));
-        type = cursor.getInt(cursor.getColumnIndex(AlarmColumns.TYPE));
-        enabled = cursor.getInt(cursor.getColumnIndex(AlarmColumns.ENABLED)) != 0;
-        hour = cursor.getInt(cursor.getColumnIndex(AlarmContract.AlarmColumns.HOUR));
-        minutes = cursor.getInt(cursor.getColumnIndex(AlarmContract.AlarmColumns.MINUTES));
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public Alarm(Parcel in) {
-        id = in.readLong();
-        type = in.readInt();
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeLong(id);
+		dest.writeInt(type);
+		dest.writeInt(enabled ? 1 : 0);
+		dest.writeInt(hour);
+		dest.writeInt(minutes);
+		dest.writeInt(vibrate ? 1 : 0);
+		dest.writeString(label);
+		dest.writeParcelable(alert, flags);
+		dest.writeInt(silent ? 1 : 0);
+	}
 
-        enabled = in.readInt() == 1;
-        hour = in.readInt();
-        minutes = in.readInt();
-        time = in.readLong();
-        vibrate = in.readInt() == 1;
-        label = in.readString();
-        alert = (Uri) in.readParcelable(null);
-        silent = in.readInt() == 1;
-    }
+	public static final Parcelable.Creator<Alarm> CREATOR = new Parcelable.Creator<Alarm>() {
+		public Alarm createFromParcel(Parcel p) {
+			return new Alarm(p);
+		}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+		public Alarm[] newArray(int size) {
+			return new Alarm[size];
+		}
+	};
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeInt(type);
-        dest.writeInt(enabled ? 1 : 0);
-        dest.writeInt(hour);
-        dest.writeInt(minutes);
-        dest.writeLong(time);
-        dest.writeInt(vibrate ? 1 : 0);
-        dest.writeString(label);
-        dest.writeParcelable(alert, flags);
-        dest.writeInt(silent ? 1 : 0);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Alarm))
+			return false;
+		final Alarm other = (Alarm) o;
+		return id == other.id;
+	}
 
-    public static final Parcelable.Creator<Alarm> CREATOR = new Parcelable.Creator<Alarm>() {
-        public Alarm createFromParcel(Parcel p) {
-            return new Alarm(p);
-        }
+	@Override
+	public int hashCode() {
+		return Long.valueOf(id).hashCode();
+	}
 
-        public Alarm[] newArray(int size) {
-            return new Alarm[size];
-        }
-    };
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Alarm))
-            return false;
-        final Alarm other = (Alarm) o;
-        return id == other.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Long.valueOf(id).hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return "Alarm{" + "alert=" + alert + ", id=" + id + ", enabled=" + enabled + ", hour="
-                + hour + ", minutes=" + minutes + ", vibrate=" + vibrate + '}';
-    }
+	@Override
+	public String toString() {
+		return "Alarm{" + "alert=" + alert + ", id=" + id + ", enabled="
+				+ enabled + ", hour=" + hour + ", minutes=" + minutes
+				+ ", vibrate=" + vibrate + '}';
+	}
 }

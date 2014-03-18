@@ -55,7 +55,7 @@ public final class AlarmContract {
          * Type: INTEGER
          * </P>
          */
-        public static final String DAYS_OF_WEEK = "daysofweek";
+        public static final String DAYS = "daysofweek";
 
         /**
          * Alarm time in UTC milliseconds from the epoch.
@@ -106,7 +106,7 @@ public final class AlarmContract {
         public static final String WHERE_ENABLED = ENABLED + "=1";
 
         static final String[] ALARM_QUERY_COLUMNS = {
-                _ID, HOUR, MINUTES, DAYS_OF_WEEK, ALARM_TIME, ENABLED, VIBRATE, MESSAGE, ALERT
+                _ID, HOUR, MINUTES, DAYS, ALARM_TIME, ENABLED, VIBRATE, MESSAGE, ALERT
         };
     }
 
