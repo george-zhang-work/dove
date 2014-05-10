@@ -4,9 +4,13 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.database.DataSetObservable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -16,10 +20,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dove.common.log.LogTag;
+import com.dove.common.log.LogUtils;
+import com.dove.lib.oeb.ncx.NCX;
 import com.dove.reader.R;
-import com.dove.reader.formatter.oeb.NCXParser;
 import com.dove.reader.ui.controller.AccountController;
 import com.dove.reader.ui.controller.DrawerController;
 
@@ -68,13 +74,54 @@ public class ReaderActivity extends AbstractReaderActivity
         AssetManager assetManager = getAssets();
         Log.d(LOG_TAG, "Begin to read all the file in assets");
         try {
-            InputStream tocFile = assetManager.open("fb.ncx");
-            NCXParser ncxParser = new NCXParser();
-            ncxParser.parse(tocFile);
-            ncxParser.showTocTree();
+            InputStream tocFile = assetManager.open("toc.ncx");
+            NCX ncx = new NCX();
+            ncx.onParse(tocFile);
+            LogUtils.i(LOG_TAG, ncx.toString());
+
         } catch (IOException | XmlPullParserException e) {
             e.printStackTrace();
         }
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
+    private static final int FILE_SELECT_CODE = 0;
+
+    private void showFileChooser() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        try {
+            startActivityForResult(
+                Intent.createChooser(intent, "Select a File to Upload"),
+                FILE_SELECT_CODE);
+        } catch (android.content.ActivityNotFoundException ex) {
+            // Potentially direct the user to the Market with a Dialog
+            Toast.makeText(this, "Please install a File Manager.",
+                Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case FILE_SELECT_CODE:
+                if (resultCode == RESULT_OK) {
+                    // Get the Uri of the selected file
+                    Uri uri = data.getData();
+                    Log.d(LOG_TAG, "File Uri: " + uri.toString());
+                    // Get the path
+//                    String path = FileUtils.getPath(this, uri);
+//                    Log.d(LOG_TAG, "File Path: " + path);
+                    // Get the file instance
+                    // File file = new File(path);
+                    // Initiate the upload
+                }
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

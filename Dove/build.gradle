@@ -18,13 +18,14 @@ allprojects {
 ext {
     compileSdkVersion = 19
     buildToolsVersion = '19.0.3'
-    minSdkVersion = 14
+    minSdkVersion = 19
     targetSdkVersion = 19
     sourceCompatibility = JavaVersion.VERSION_1_7
     targetCompatibility = JavaVersion.VERSION_1_7
     runProguard = false
+    compileGson = 'com.google.code.gson:gson:2.2.4'
+    compileGuava = 'com.google.guava:guava:r09'
     compileSupportV4 = 'com.android.support:support-v4:19.+'
-    compileGoogleCollections = 'com.google.collections:google-collections:1.0'
 }
 
 project.ext.preDexLibs = !project.hasProperty('disablePreDex')

@@ -71,9 +71,11 @@ configurations {
 }
 dependencies {
     compile rootProject.ext.compileSupportV4
-    compile rootProject.ext.compileGoogleCollections
+    compile rootProject.ext.compileGson
+    compile rootProject.ext.compileGuava
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':common')
+    compile project(':oeb')
     unitTestCompile files("$project.buildDir/classes/release")
     unitTestCompile 'junit:junit:4.10'
     unitTestCompile 'org.robolectric:robolectric:2.2'
