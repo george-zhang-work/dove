@@ -14,6 +14,18 @@ public final class ReaderContract {
      */
     public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
 
+    public interface ElementColumns {
+        public static final String ID = "id";
+    }
+
+    public interface TextElementColumns extends ElementColumns {
+        public static final String TEXT = "text";
+    }
+
+    public interface SimpleTextElementColumns extends TextElementColumns {
+
+    }
+
     public interface AccountsColumns {
         /**
          * This string column contains the human visible name for the account.

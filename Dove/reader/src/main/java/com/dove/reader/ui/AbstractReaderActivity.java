@@ -12,7 +12,7 @@ public abstract class AbstractReaderActivity extends Activity implements Applica
     /**
      * Do not enabled the strict mode for production.
      */
-    private static final boolean STRICT_MODE = true;
+    private static final boolean STRICT_MODE = false;
 
     protected final UiHandler mUiHandler = new UiHandler();
 

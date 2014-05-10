@@ -25,6 +25,6 @@ android {
 
 dependencies {
     compile rootProject.ext.compileSupportV4
-    compile rootProject.ext.compileGoogleCollections
+    compile rootProject.ext.compileGuava
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

@@ -31,7 +31,6 @@ import com.dove.common.content.ObjectCursorLoader;
 import com.dove.common.log.LogTag;
 import com.dove.reader.R;
 import com.dove.reader.provider.ReaderContract;
-import com.dove.reader.provider.book.Content;
 
 import java.util.ArrayList;
 import java.util.List;
