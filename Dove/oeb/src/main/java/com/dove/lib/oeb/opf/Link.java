@@ -51,8 +51,8 @@ public class Link extends SimpleElement {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mHref = parser.getAttributeValue("", OEBContract.Attributes.HREF);
         mRel = parser.getAttributeValue("", OEBContract.Attributes.REL);
         mRefines = parser.getAttributeValue("", OEBContract.Attributes.REFINES);

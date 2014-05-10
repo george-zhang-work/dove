@@ -78,8 +78,8 @@ public class SimpleTextElement extends TextElement {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mId = parser.getAttributeValue("", mId);
     }
 }

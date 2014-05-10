@@ -62,8 +62,8 @@ public class ItemRef extends SimpleElement {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mIdRef = parser.getAttributeValue("", OEBContract.Attributes.IDREF);
         mLinear = Linear.fromValue(parser.getAttributeValue("", OEBContract.Attributes.LINEAR));
         mProperties = parser.getAttributeValue("", OEBContract.Attributes.PROPERTIES);

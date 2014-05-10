@@ -75,8 +75,8 @@ public class Meta extends SimpleTextElement {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mProperty = Property.fromValue(parser.getAttributeValue("", OEBContract.Attributes.PROPERTY));
         mRefines = parser.getAttributeValue("", OEBContract.Attributes.REFINES);
         mScheme = parser.getAttributeValue("", OEBContract.Attributes.SCHEME);

@@ -52,8 +52,8 @@ public class Spine extends SimpleElement {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mToc = parser.getAttributeValue("", OEBContract.Attributes.TOC);
         mDir = Direction.fromValue(parser.getAttributeValue("", OEBContract.Attributes.DIR));
     }

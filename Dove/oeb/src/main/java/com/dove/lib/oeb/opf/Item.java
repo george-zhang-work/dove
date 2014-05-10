@@ -80,8 +80,8 @@ public class Item extends SimpleElement {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mHref = parser.getAttributeValue("", OEBContract.Attributes.HREF);
         mMediaType = parser.getAttributeValue("", OEBContract.Attributes.MEDIA_TYPE);
         mFallback = parser.getAttributeValue("", OEBContract.Attributes.FALLBACK);

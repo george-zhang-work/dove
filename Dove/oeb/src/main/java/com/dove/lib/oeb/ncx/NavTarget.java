@@ -59,8 +59,8 @@ public class NavTarget extends SimpleTextElement {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mClass = parser.getAttributeValue("", OEBContract.Attributes.CLASS);
         mPlayOrder = Integer.parseInt(parser.getAttributeValue("", OEBContract.Attributes.PLAY_ORDER));
         mValue = parser.getAttributeValue("", OEBContract.Attributes.VALUE);

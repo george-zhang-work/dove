@@ -57,8 +57,8 @@ public class PageList extends SimpleElement {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mClass = parser.getAttributeValue("", OEBContract.Attributes.CLASS);
     }
 

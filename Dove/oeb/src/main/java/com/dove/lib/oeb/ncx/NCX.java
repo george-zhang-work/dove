@@ -88,8 +88,8 @@ public class NCX extends Element {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mVersion = parser.getAttributeValue("", OEBContract.Attributes.VERSION);
         mXmlLang = parser.getAttributeValue(OEBContract.Namespaces.XML, OEBContract.Attributes.LANG);
         mDir = Direction.fromValue(parser.getAttributeValue("", OEBContract.Attributes.DIR));

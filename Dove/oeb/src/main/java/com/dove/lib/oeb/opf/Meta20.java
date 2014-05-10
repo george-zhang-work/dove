@@ -67,8 +67,8 @@ public class Meta20 extends SimpleElement {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mXmlLang = parser.getAttributeValue(OEBContract.Namespaces.XML, OEBContract.Attributes.XML_LANG);
         mName = parser.getAttributeValue("", OEBContract.Attributes.NAME);
         mContent = parser.getAttributeValue("", OEBContract.Attributes.CONTENT);

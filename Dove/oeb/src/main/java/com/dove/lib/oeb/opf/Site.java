@@ -50,8 +50,8 @@ public class Site extends SimpleElement {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mTitle = parser.getAttributeValue("", OEBContract.Attributes.TITLE);
         mHref = parser.getAttributeValue("", OEBContract.Attributes.HREF);
     }

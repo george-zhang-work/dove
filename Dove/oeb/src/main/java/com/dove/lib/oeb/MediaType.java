@@ -10,7 +10,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Map;
 
-public class MediaType implements Parcelable, Serializeable {
+public class MediaType implements Parcelable {
     // Application Types
     public static final MediaType XHTML = new MediaType("application/xhtml+xml", ".xhtml", new String[]{".htm", ".html", ".xhtml"});
     public static final MediaType EPUB = new MediaType("application/epub+zip", ".epub");
@@ -97,16 +97,6 @@ public class MediaType implements Parcelable, Serializeable {
     @Override
     public int hashCode() {
         return Objects.hashCode(mName);
-    }
-
-    @Override
-    public String toSerialize() {
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        return toSerialize();
     }
 
     public static final Parcelable.Creator<MediaType> CREATOR = new Parcelable.ClassLoaderCreator<MediaType>() {

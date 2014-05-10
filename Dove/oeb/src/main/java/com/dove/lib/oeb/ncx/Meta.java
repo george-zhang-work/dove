@@ -64,8 +64,8 @@ public class Meta extends Element {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mName = parser.getAttributeValue("", OEBContract.Attributes.NAME);
         mContent = parser.getAttributeValue("", OEBContract.Attributes.CONTENT);
         mScheme = parser.getAttributeValue("", OEBContract.Attributes.SCHEME);

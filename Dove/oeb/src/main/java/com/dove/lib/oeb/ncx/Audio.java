@@ -47,8 +47,8 @@ public class Audio extends SimpleElement {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mSrc = parser.getAttributeValue("", OEBContract.Attributes.SRC);
         mClipBegin = parser.getAttributeValue("", OEBContract.Attributes.CLIP_BEGIN);
         mClipEnd = parser.getAttributeValue("", OEBContract.Attributes.CLIP_END);

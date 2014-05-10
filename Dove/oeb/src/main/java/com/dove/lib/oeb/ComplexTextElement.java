@@ -91,8 +91,8 @@ public class ComplexTextElement extends SimpleTextElement {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mXmlLang = parser.getAttributeValue(OEBContract.Namespaces.XML, OEBContract.Attributes.LANG);
         mDir = Direction.fromValue(parser.getAttributeValue("", OEBContract.Attributes.DIR));
     }
