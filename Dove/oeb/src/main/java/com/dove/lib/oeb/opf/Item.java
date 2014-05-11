@@ -3,11 +3,13 @@ package com.dove.lib.oeb.opf;
 import android.os.Parcel;
 
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleElement;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 
@@ -74,14 +76,16 @@ public class Item extends SimpleElement {
         return mMediaOverlay;
     }
 
+    public static final ClassLoaderCreator<Item> CREATOR = new ParcelableCreator<>(Item.class);
+
     @Override
     protected String getElementName() {
         return OEBContract.Elements.RESOURCE;
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mHref = parser.getAttributeValue("", OEBContract.Attributes.HREF);
         mMediaType = parser.getAttributeValue("", OEBContract.Attributes.MEDIA_TYPE);
         mFallback = parser.getAttributeValue("", OEBContract.Attributes.FALLBACK);
@@ -89,20 +93,14 @@ public class Item extends SimpleElement {
         mMediaOverlay = parser.getAttributeValue("", OEBContract.Attributes.MEDIA_OVERLAY);
     }
 
-    public static final ClassLoaderCreator<Item> CREATOR = new ClassLoaderCreator<Item>() {
-        @Override
-        public Item createFromParcel(Parcel source, ClassLoader loader) {
-            return new Item(source, loader);
-        }
-
-        @Override
-        public Item createFromParcel(Parcel source) {
-            return new Item(source, null);
-        }
-
-        @Override
-        public Item[] newArray(int size) {
-            return new Item[size];
-        }
-    };
+    @Override
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeAttributes(serializer);
+        serializeValue(serializer, "", OEBContract.Attributes.HREF, mHref);
+        serializeValue(serializer, "", OEBContract.Attributes.MEDIA_TYPE, mMediaType);
+        serializeValue(serializer, "", OEBContract.Attributes.FALLBACK, mFallback);
+        serializeValue(serializer, "", OEBContract.Attributes.PROPERTIES, mProperties);
+        serializeValue(serializer, "", OEBContract.Attributes.MEDIA_OVERLAY, mMediaOverlay);
+    }
 }

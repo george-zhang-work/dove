@@ -4,6 +4,7 @@ import android.os.Parcel;
 
 import com.dove.lib.oeb.ComplexTextElement;
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 
 /**
  * Created by george on 5/4/14.
@@ -27,20 +28,5 @@ public final class Author extends ComplexTextElement {
         return OEBContract.Namespaces.DC;
     }
 
-    public static final ClassLoaderCreator<Author> CREATOR = new ClassLoaderCreator<Author>() {
-        @Override
-        public Author createFromParcel(Parcel source, ClassLoader loader) {
-            return new Author(source, loader);
-        }
-
-        @Override
-        public Author createFromParcel(Parcel source) {
-            return new Author(source, null);
-        }
-
-        @Override
-        public Author[] newArray(int size) {
-            return new Author[size];
-        }
-    };
+    public static final ClassLoaderCreator<Author> CREATOR = new ParcelableCreator<>(Author.class);
 }

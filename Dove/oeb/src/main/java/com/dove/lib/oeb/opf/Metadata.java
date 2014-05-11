@@ -4,6 +4,7 @@ import android.os.Parcel;
 
 import com.dove.lib.oeb.Element;
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.google.common.base.Objects;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Lists;
@@ -12,6 +13,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -98,6 +100,9 @@ public class Metadata extends Element {
 
     public Metadata(Parcel in, ClassLoader loader) {
         super(in, loader);
+        mDate = in.readParcelable(loader);
+        mSource = in.readParcelable(loader);
+        mType = in.readParcelable(loader);
         mIdentifiers = in.readArrayList(loader);
         mTitles = in.readArrayList(loader);
         mLanguages = in.readArrayList(loader);
@@ -132,6 +137,9 @@ public class Metadata extends Element {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
+        dest.writeParcelable(mDate, flags);
+        dest.writeParcelable(mSource, flags);
+        dest.writeParcelable(mType, flags);
         dest.writeList(mIdentifiers);
         dest.writeList(mTitles);
         dest.writeList(mLanguages);
@@ -156,21 +164,11 @@ public class Metadata extends Element {
 
         dest.writeInt(mMeta20s.size());
         final Iterator<Map.Entry<String, Meta20>> it2 = mMeta20s.entries().iterator();
-        while (it.hasNext()) {
-            final Map.Entry<String, Meta> entry = it.next();
+        while (it2.hasNext()) {
+            final Map.Entry<String, Meta20> entry = it2.next();
             dest.writeString(entry.getKey());
             dest.writeParcelable(entry.getValue(), flags);
         }
-    }
-
-    @Override
-    protected String getElementName() {
-        return OEBContract.Elements.METADATA;
-    }
-
-    @Override
-    protected String getElementNamespace() {
-        return OEBContract.Namespaces.DC;
     }
 
     @Override
@@ -193,22 +191,17 @@ public class Metadata extends Element {
         return Objects.hashCode(mIdentifiers, mTitles, mLanguages, mContributors, mAuthors);
     }
 
-    public static final ClassLoaderCreator<Metadata> CREATOR = new ClassLoaderCreator<Metadata>() {
-        @Override
-        public Metadata createFromParcel(Parcel source, ClassLoader loader) {
-            return new Metadata(source, loader);
-        }
+    public static final ClassLoaderCreator<Metadata> CREATOR = new ParcelableCreator<>(Metadata.class);
 
-        @Override
-        public Metadata createFromParcel(Parcel source) {
-            return new Metadata(source, null);
-        }
+    @Override
+    protected String getElementName() {
+        return OEBContract.Elements.METADATA;
+    }
 
-        @Override
-        public Metadata[] newArray(int size) {
-            return new Metadata[size];
-        }
-    };
+    @Override
+    protected String getElementNamespace() {
+        return OEBContract.Namespaces.DC;
+    }
 
     @Override
     protected void onParseContent(XmlPullParser parser) throws XmlPullParserException, IOException {
@@ -320,5 +313,26 @@ public class Metadata extends Element {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onSerializeContent(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeContent(serializer);
+        serialize(serializer, mDate);
+        serialize(serializer, mSource);
+        serialize(serializer, mType);
+        serializeCollection(serializer, mIdentifiers);
+        serializeCollection(serializer, mTitles);
+        serializeCollection(serializer, mLanguages);
+        serializeCollection(serializer, mContributors);
+        serializeCollection(serializer, mAuthors);
+        serializeCollection(serializer, mCoverages);
+        serializeCollection(serializer, mDescriptions);
+        serializeCollection(serializer, mFormats);
+        serializeCollection(serializer, mPublishers);
+        serializeCollection(serializer, mRightses);
+        serializeCollection(serializer, mSubjects);
+        serializeCollection(serializer, mLinks);
     }
 }

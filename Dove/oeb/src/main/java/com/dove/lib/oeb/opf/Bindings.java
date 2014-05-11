@@ -4,10 +4,12 @@ import android.os.Parcel;
 
 import com.dove.lib.oeb.Element;
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.List;
  */
 public class Bindings extends Element {
     @SerializedName(OEBContract.Elements.MEDIA_TYPES)
-    List<MediaType> mMediaTypes;
+    private List<MediaType> mMediaTypes;
 
     public Bindings() {
         super();
@@ -34,6 +36,8 @@ public class Bindings extends Element {
         dest.writeList(mMediaTypes);
     }
 
+    public static final ClassLoaderCreator<Bindings> CREATOR = new ParcelableCreator<>(Bindings.class);
+
     @Override
     protected String getElementName() {
         return OEBContract.Elements.BINDINGS;
@@ -43,10 +47,8 @@ public class Bindings extends Element {
     protected void onParseContent(XmlPullParser parser) throws XmlPullParserException, IOException {
         int eventType = parser.next();
         while (eventType != XmlPullParser.END_DOCUMENT) {
-
             if (eventType == XmlPullParser.START_TAG) {
                 switch (parser.getName()) {
-
                     case OEBContract.Elements.MEDIA_TYPE:
                         final MediaType mediaType = new MediaType();
                         mediaType.onParse(parser);
@@ -63,5 +65,12 @@ public class Bindings extends Element {
             }
             eventType = parser.next();
         }
+    }
+
+    @Override
+    protected void onSerializeContent(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeContent(serializer);
+        serializeCollection(serializer, mMediaTypes);
     }
 }

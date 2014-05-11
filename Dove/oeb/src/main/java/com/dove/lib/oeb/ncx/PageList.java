@@ -3,12 +3,14 @@ package com.dove.lib.oeb.ncx;
 import android.os.Parcel;
 
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleElement;
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 import java.util.List;
@@ -51,14 +53,16 @@ public class PageList extends SimpleElement {
         dest.writeList(mPageTargets);
     }
 
+    public static final ClassLoaderCreator<PageList> CREATOR = new ParcelableCreator<>(PageList.class);
+
     @Override
     protected String getElementName() {
         return OEBContract.Elements.NAV_MAP;
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mClass = parser.getAttributeValue("", OEBContract.Attributes.CLASS);
     }
 
@@ -99,20 +103,19 @@ public class PageList extends SimpleElement {
         }
     }
 
-    public static final ClassLoaderCreator<PageList> CREATOR = new ClassLoaderCreator<PageList>() {
-        @Override
-        public PageList createFromParcel(Parcel source, ClassLoader loader) {
-            return new PageList(source, loader);
-        }
+    @Override
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeAttributes(serializer);
+        serializeValue(serializer, "", OEBContract.Attributes.CLASS, mClass);
+    }
 
-        @Override
-        public PageList createFromParcel(Parcel source) {
-            return new PageList(source, null);
-        }
-
-        @Override
-        public PageList[] newArray(int size) {
-            return new PageList[size];
-        }
-    };
+    @Override
+    protected void onSerializeContent(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeContent(serializer);
+        serializeCollection(serializer, mNavInfos);
+        serializeCollection(serializer, mNavLabels);
+        serializeCollection(serializer, mPageTargets);
+    }
 }

@@ -3,6 +3,7 @@ package com.dove.lib.oeb.ncx;
 import android.os.Parcel;
 
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleTextElement;
 
 /**
@@ -22,20 +23,5 @@ public class Text extends SimpleTextElement {
         return OEBContract.Elements.TEXT;
     }
 
-    public static final ClassLoaderCreator<Text> CREATOR = new ClassLoaderCreator<Text>() {
-        @Override
-        public Text createFromParcel(Parcel source, ClassLoader loader) {
-            return new Text(source, loader);
-        }
-
-        @Override
-        public Text createFromParcel(Parcel source) {
-            return new Text(source, null);
-        }
-
-        @Override
-        public Text[] newArray(int size) {
-            return new Text[size];
-        }
-    };
+    public static final ClassLoaderCreator<Text> CREATOR = new ParcelableCreator<>(Text.class);
 }

@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 
@@ -52,22 +53,7 @@ public class TextElement extends Element {
         return Objects.hashCode(mText);
     }
 
-    public static final ClassLoaderCreator<TextElement> CREATOR = new ClassLoaderCreator<TextElement>() {
-        @Override
-        public TextElement createFromParcel(Parcel source, ClassLoader loader) {
-            return new TextElement(source, loader);
-        }
-
-        @Override
-        public TextElement createFromParcel(Parcel source) {
-            return new TextElement(source, null);
-        }
-
-        @Override
-        public TextElement[] newArray(int size) {
-            return new TextElement[size];
-        }
-    };
+    public static final ClassLoaderCreator<TextElement> CREATOR = new ParcelableCreator<>(TextElement.class);
 
     @Override
     protected String getElementName() {
@@ -77,5 +63,11 @@ public class TextElement extends Element {
     @Override
     protected void onParseContent(XmlPullParser parser) throws XmlPullParserException, IOException {
         mText = parser.nextText();
+    }
+
+    @Override
+    protected void onSerializeContent(XmlSerializer serializer) throws IOException {
+        super.onSerializeContent(serializer);
+        serializer.text(mText);
     }
 }

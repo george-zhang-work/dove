@@ -4,11 +4,13 @@ import android.os.Parcel;
 
 import com.dove.lib.oeb.Direction;
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleElement;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 
@@ -77,22 +79,7 @@ public class Package extends SimpleElement {
         dest.writeParcelable(mTours, flags);
     }
 
-    public static final ClassLoaderCreator<Package> CREATOR = new ClassLoaderCreator<Package>() {
-        @Override
-        public Package createFromParcel(Parcel source, ClassLoader loader) {
-            return new Package(source, loader);
-        }
-
-        @Override
-        public Package createFromParcel(Parcel source) {
-            return new Package(source, null);
-        }
-
-        @Override
-        public Package[] newArray(int size) {
-            return new Package[size];
-        }
-    };
+    public static final ClassLoaderCreator<Package> CREATOR = new ParcelableCreator<>(Package.class);
 
     @Override
     protected String getElementName() {
@@ -100,8 +87,8 @@ public class Package extends SimpleElement {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mVersion = parser.getAttributeValue("", OEBContract.Attributes.VERSION);
         mXmlLang = parser.getAttributeValue(OEBContract.Namespaces.XML, OEBContract.Attributes.LANG);
         mUniqueIdentifier = parser.getAttributeValue("", OEBContract.Attributes.UNIQUE_IDENTIFIER);
@@ -157,5 +144,28 @@ public class Package extends SimpleElement {
             }
             eventType = parser.next();
         }
+    }
+
+    @Override
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeAttributes(serializer);
+        serializeValue(serializer, "", OEBContract.Attributes.VERSION, mVersion);
+        serializeValue(serializer, "", OEBContract.Attributes.LANG, mXmlLang);
+        serializeValue(serializer, "", OEBContract.Attributes.UNIQUE_IDENTIFIER, mUniqueIdentifier);
+        serializeValue(serializer, "", OEBContract.Attributes.DIR, mDir.toString());
+        serializeValue(serializer, "", OEBContract.Attributes.PREFIX, mPrefix);
+    }
+
+    @Override
+    protected void onSerializeContent(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeContent(serializer);
+        serialize(serializer, mMetadata);
+        serialize(serializer, mManifest);
+        serialize(serializer, mSpine);
+        serialize(serializer, mGuide);
+        serialize(serializer, mBindings);
+        serialize(serializer, mTours);
     }
 }

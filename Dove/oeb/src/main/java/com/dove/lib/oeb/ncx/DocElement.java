@@ -4,12 +4,14 @@ import android.os.Parcel;
 
 import com.dove.lib.oeb.Direction;
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleElement;
 import com.google.common.base.Objects;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 
@@ -53,14 +55,16 @@ public class DocElement extends SimpleElement {
         dest.writeParcelable(mImage, flags);
     }
 
+    public static final ClassLoaderCreator<DocElement> CREATOR = new ParcelableCreator<>(DocElement.class);
+
     @Override
     protected String getElementName() {
         return OEBContract.Elements.DOC_ELEMENT;
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mXmlLang = parser.getAttributeValue(OEBContract.Namespaces.XML, OEBContract.Attributes.LANG);
         mDir = Direction.fromValue(parser.getAttributeValue("", OEBContract.Attributes.DIR));
     }
@@ -97,20 +101,20 @@ public class DocElement extends SimpleElement {
         }
     }
 
-    public static final ClassLoaderCreator<DocElement> CREATOR = new ClassLoaderCreator<DocElement>() {
-        @Override
-        public DocElement createFromParcel(Parcel source, ClassLoader loader) {
-            return new DocElement(source, loader);
-        }
+    @Override
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeAttributes(serializer);
+        serializeValue(serializer, OEBContract.Namespaces.XML, OEBContract.Attributes.LANG, mXmlLang);
+        serializeValue(serializer, "", OEBContract.Attributes.DIR, mDir.toString());
+    }
 
-        @Override
-        public DocElement createFromParcel(Parcel source) {
-            return new DocElement(source, null);
-        }
-
-        @Override
-        public DocElement[] newArray(int size) {
-            return new DocElement[size];
-        }
-    };
+    @Override
+    protected void onSerializeContent(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeContent(serializer);
+        serialize(serializer, mText);
+        serialize(serializer, mAudio);
+        serialize(serializer, mImage);
+    }
 }

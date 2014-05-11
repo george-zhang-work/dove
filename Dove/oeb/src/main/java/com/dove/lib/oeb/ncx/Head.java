@@ -4,11 +4,13 @@ import android.os.Parcel;
 
 import com.dove.lib.oeb.Element;
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,6 +37,8 @@ public class Head extends Element {
         super.writeToParcel(dest, flags);
         dest.writeList(mMetas);
     }
+
+    public static final ClassLoaderCreator<Head> CREATOR = new ParcelableCreator<>(Head.class);
 
     @Override
     protected String getElementName() {
@@ -65,5 +69,12 @@ public class Head extends Element {
             }
             eventType = parser.next();
         }
+    }
+
+    @Override
+    protected void onSerializeContent(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeContent(serializer);
+        serializeCollection(serializer, mMetas);
     }
 }

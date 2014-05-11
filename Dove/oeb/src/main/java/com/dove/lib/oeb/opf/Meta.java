@@ -4,12 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleTextElement;
 import com.google.common.base.Objects;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 
@@ -69,34 +71,28 @@ public class Meta extends SimpleTextElement {
         return mScheme;
     }
 
+    public static final Parcelable.ClassLoaderCreator<Meta> CREATOR = new ParcelableCreator<>(Meta.class);
+
     @Override
     protected String getElementName() {
         return OEBContract.Elements.META;
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mProperty = Property.fromValue(parser.getAttributeValue("", OEBContract.Attributes.PROPERTY));
         mRefines = parser.getAttributeValue("", OEBContract.Attributes.REFINES);
         mScheme = parser.getAttributeValue("", OEBContract.Attributes.SCHEME);
     }
 
-    public static final Parcelable.ClassLoaderCreator<Meta> CREATOR = new Parcelable.ClassLoaderCreator<Meta>() {
-        @Override
-        public Meta createFromParcel(Parcel source, ClassLoader loader) {
-            return new Meta(source, loader);
-        }
-
-        @Override
-        public Meta createFromParcel(Parcel source) {
-            return new Meta(source, Meta.class.getClassLoader());
-        }
-
-        @Override
-        public Meta[] newArray(int size) {
-            return new Meta[size];
-        }
-    };
+    @Override
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeAttributes(serializer);
+        serializeValue(serializer, "", OEBContract.Attributes.PROPERTY, mProperty.toString());
+        serializeValue(serializer, "", OEBContract.Attributes.REFINES, mRefines);
+        serializeValue(serializer, "", OEBContract.Attributes.SCHEME, mScheme);
+    }
 }
 

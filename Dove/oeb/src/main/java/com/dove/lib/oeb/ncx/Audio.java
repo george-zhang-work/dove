@@ -3,11 +3,13 @@ package com.dove.lib.oeb.ncx;
 import android.os.Parcel;
 
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleElement;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 
@@ -41,33 +43,27 @@ public class Audio extends SimpleElement {
         dest.writeString(mClipEnd);
     }
 
+    public static final ClassLoaderCreator<Audio> CREATOR = new ParcelableCreator<>(Audio.class);
+
     @Override
     protected String getElementName() {
         return OEBContract.Elements.AUDIO;
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mSrc = parser.getAttributeValue("", OEBContract.Attributes.SRC);
         mClipBegin = parser.getAttributeValue("", OEBContract.Attributes.CLIP_BEGIN);
         mClipEnd = parser.getAttributeValue("", OEBContract.Attributes.CLIP_END);
     }
 
-    public static final ClassLoaderCreator<Audio> CREATOR = new ClassLoaderCreator<Audio>() {
-        @Override
-        public Audio createFromParcel(Parcel source, ClassLoader loader) {
-            return new Audio(source, loader);
-        }
-
-        @Override
-        public Audio createFromParcel(Parcel source) {
-            return new Audio(source, null);
-        }
-
-        @Override
-        public Audio[] newArray(int size) {
-            return new Audio[size];
-        }
-    };
+    @Override
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeAttributes(serializer);
+        serializeValue(serializer, "", OEBContract.Attributes.SRC, mSrc);
+        serializeValue(serializer, "", OEBContract.Attributes.CLIP_BEGIN, mClipBegin);
+        serializeValue(serializer, "", OEBContract.Attributes.CLIP_END, mClipEnd);
+    }
 }

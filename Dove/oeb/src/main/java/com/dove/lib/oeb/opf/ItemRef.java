@@ -3,12 +3,14 @@ package com.dove.lib.oeb.opf;
 import android.os.Parcel;
 
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleElement;
 import com.google.common.base.Objects;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 
@@ -43,11 +45,6 @@ public class ItemRef extends SimpleElement {
     }
 
     @Override
-    protected String getElementName() {
-        return OEBContract.Elements.ITEM_REF;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ItemRef)) return false;
@@ -61,28 +58,27 @@ public class ItemRef extends SimpleElement {
         return Objects.hashCode(mIdRef);
     }
 
+    public static final ClassLoaderCreator<ItemRef> CREATOR = new ParcelableCreator<>(ItemRef.class);
+
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected String getElementName() {
+        return OEBContract.Elements.ITEM_REF;
+    }
+
+    @Override
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mIdRef = parser.getAttributeValue("", OEBContract.Attributes.IDREF);
         mLinear = Linear.fromValue(parser.getAttributeValue("", OEBContract.Attributes.LINEAR));
         mProperties = parser.getAttributeValue("", OEBContract.Attributes.PROPERTIES);
     }
 
-    public static final ClassLoaderCreator<ItemRef> CREATOR = new ClassLoaderCreator<ItemRef>() {
-        @Override
-        public ItemRef createFromParcel(Parcel source, ClassLoader loader) {
-            return new ItemRef(source, loader);
-        }
-
-        @Override
-        public ItemRef createFromParcel(Parcel source) {
-            return new ItemRef(source, null);
-        }
-
-        @Override
-        public ItemRef[] newArray(int size) {
-            return new ItemRef[size];
-        }
-    };
+    @Override
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeAttributes(serializer);
+        serializeValue(serializer, "", OEBContract.Attributes.IDREF, mIdRef);
+        serializeValue(serializer, "", OEBContract.Attributes.LINEAR, mLinear.toString());
+        serializeValue(serializer, "", OEBContract.Attributes.PROPERTIES, mProperties);
+    }
 }

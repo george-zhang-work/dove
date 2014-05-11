@@ -4,6 +4,7 @@ import android.os.Parcel;
 
 import com.dove.lib.oeb.ComplexTextElement;
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 
 /**
  * Created by george on 5/4/14.
@@ -17,6 +18,8 @@ public final class Relation extends ComplexTextElement {
         super(in, loader);
     }
 
+    public static final ClassLoaderCreator<Relation> CREATOR = new ParcelableCreator<>(Relation.class);
+
     @Override
     protected String getElementName() {
         return OEBContract.Elements.RELATION;
@@ -26,21 +29,4 @@ public final class Relation extends ComplexTextElement {
     protected String getElementNamespace() {
         return OEBContract.Namespaces.DC;
     }
-
-    public static final ClassLoaderCreator<Relation> CREATOR = new ClassLoaderCreator<Relation>() {
-        @Override
-        public Relation createFromParcel(Parcel source, ClassLoader loader) {
-            return new Relation(source, loader);
-        }
-
-        @Override
-        public Relation createFromParcel(Parcel source) {
-            return new Relation(source, null);
-        }
-
-        @Override
-        public Relation[] newArray(int size) {
-            return new Relation[size];
-        }
-    };
 }

@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 
@@ -68,22 +69,8 @@ public class ComplexTextElement extends SimpleTextElement {
         return Objects.hashCode(super.hashCode(), mDir, mXmlLang);
     }
 
-    public static final ClassLoaderCreator<ComplexTextElement> CREATOR = new ClassLoaderCreator<ComplexTextElement>() {
-        @Override
-        public ComplexTextElement createFromParcel(Parcel source, ClassLoader loader) {
-            return new ComplexTextElement(source, loader);
-        }
-
-        @Override
-        public ComplexTextElement createFromParcel(Parcel source) {
-            return new ComplexTextElement(source, null);
-        }
-
-        @Override
-        public ComplexTextElement[] newArray(int size) {
-            return new ComplexTextElement[size];
-        }
-    };
+    public static final ClassLoaderCreator<ComplexTextElement> CREATOR =
+        new ParcelableCreator<>(ComplexTextElement.class);
 
     @Override
     protected String getElementName() {
@@ -91,9 +78,17 @@ public class ComplexTextElement extends SimpleTextElement {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mXmlLang = parser.getAttributeValue(OEBContract.Namespaces.XML, OEBContract.Attributes.LANG);
         mDir = Direction.fromValue(parser.getAttributeValue("", OEBContract.Attributes.DIR));
+    }
+
+    @Override
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeAttributes(serializer);
+        serializeValue(serializer, OEBContract.Namespaces.XML, OEBContract.Attributes.LANG, mXmlLang);
+        serializeValue(serializer, "", OEBContract.Attributes.DIR, mDir.toString());
     }
 }

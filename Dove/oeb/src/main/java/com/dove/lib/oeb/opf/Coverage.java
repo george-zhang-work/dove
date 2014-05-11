@@ -4,6 +4,7 @@ import android.os.Parcel;
 
 import com.dove.lib.oeb.ComplexTextElement;
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 
 /**
  * Created by george on 5/4/14.
@@ -27,20 +28,5 @@ public final class Coverage extends ComplexTextElement {
         return OEBContract.Namespaces.DC;
     }
 
-    public static final ClassLoaderCreator<Coverage> CREATOR = new ClassLoaderCreator<Coverage>() {
-        @Override
-        public Coverage createFromParcel(Parcel source, ClassLoader loader) {
-            return new Coverage(source, loader);
-        }
-
-        @Override
-        public Coverage createFromParcel(Parcel source) {
-            return new Coverage(source, null);
-        }
-
-        @Override
-        public Coverage[] newArray(int size) {
-            return new Coverage[size];
-        }
-    };
+    public static final ClassLoaderCreator<Coverage> CREATOR = new ParcelableCreator<>(Coverage.class);
 }

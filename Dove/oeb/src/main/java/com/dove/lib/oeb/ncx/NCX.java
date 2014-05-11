@@ -5,11 +5,13 @@ import android.os.Parcel;
 import com.dove.lib.oeb.Direction;
 import com.dove.lib.oeb.Element;
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 import java.util.List;
@@ -77,6 +79,8 @@ public class NCX extends Element {
         dest.writeParcelable(mNavList, flags);
     }
 
+    public static final ClassLoaderCreator<NCX> CREATOR = new ParcelableCreator<>(NCX.class);
+
     @Override
     protected String getElementName() {
         return OEBContract.Elements.NCX;
@@ -88,8 +92,8 @@ public class NCX extends Element {
     }
 
     @Override
-    protected void onParseAtrributes(XmlPullParser parser) throws XmlPullParserException, IOException {
-        super.onParseAtrributes(parser);
+    protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
+        super.onParseAttributes(parser);
         mVersion = parser.getAttributeValue("", OEBContract.Attributes.VERSION);
         mXmlLang = parser.getAttributeValue(OEBContract.Namespaces.XML, OEBContract.Attributes.LANG);
         mDir = Direction.fromValue(parser.getAttributeValue("", OEBContract.Attributes.DIR));
@@ -140,5 +144,27 @@ public class NCX extends Element {
             }
             eventType = parser.next();
         }
+    }
+
+    @Override
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeAttributes(serializer);
+        serializeValue(serializer, "", OEBContract.Attributes.VERSION, mVersion);
+        serializeValue(serializer, OEBContract.Namespaces.XML, OEBContract.Attributes.LANG, mXmlLang);
+        serializeValue(serializer, "", OEBContract.Attributes.DIR, mDir.toString());
+    }
+
+    @Override
+    protected void onSerializeContent(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeContent(serializer);
+        serialize(serializer, mHead);
+        serialize(serializer, mTitle);
+        serializeCollection(serializer, mAuthors);
+        serialize(serializer, mNavMap);
+        serialize(serializer, mNavMap);
+        serialize(serializer, mPageList);
+        serialize(serializer, mNavList);
     }
 }

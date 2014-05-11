@@ -3,6 +3,7 @@ package com.dove.lib.oeb.opf;
 import android.os.Parcel;
 
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleElement;
 
 /**
@@ -28,20 +29,5 @@ public class Language extends SimpleElement {
         return OEBContract.Namespaces.DC;
     }
 
-    public static final ClassLoaderCreator<Language> CREATOR = new ClassLoaderCreator<Language>() {
-        @Override
-        public Language createFromParcel(Parcel source, ClassLoader loader) {
-            return new Language(source, loader);
-        }
-
-        @Override
-        public Language createFromParcel(Parcel source) {
-            return new Language(source, null);
-        }
-
-        @Override
-        public Language[] newArray(int size) {
-            return new Language[size];
-        }
-    };
+    public static final ClassLoaderCreator<Language> CREATOR = new ParcelableCreator<>(Language.class);
 }
