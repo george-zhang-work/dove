@@ -42,6 +42,7 @@ public final class OEBContract {
         public static final String CLASS = "class";
         public static final String PLAY_ORDER = "playOrder";
         public static final String VALUE = "value";
+        public static final String XMLNS = "xmlns";
     }
 
     public interface ElementType extends ElementsAndAttributes {
@@ -149,5 +150,10 @@ public final class OEBContract {
         public static final String OPF = "http://www.idpf.org/2007/opf";
         public static final String DC = "http://purl.org/dc/elements/1.1/";
         public static final String NCX = "http://www.daisy.org/z3986/2005/ncx/";
+    }
+
+    public interface NamespacePrefix {
+        public static final String ANY = null;
+        public static final String XML = "xml";
     }
 }

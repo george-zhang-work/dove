@@ -23,7 +23,7 @@ public class NCX extends Element {
     @SerializedName(OEBContract.Attributes.VERSION)
     private String mVersion;
     @SerializedName(OEBContract.Attributes.XML_LANG)
-    private String mXmlLang;
+    private String mLang;
     @SerializedName(OEBContract.Attributes.DIR)
     private Direction mDir;
 
@@ -42,7 +42,7 @@ public class NCX extends Element {
 
     public NCX() {
         super();
-        mDir = Direction.DEFAULT;
+        mDir = Direction.EMPTY;
 
         mAuthors = Lists.newArrayList();
         mNavMap = new NavMap();
@@ -53,7 +53,7 @@ public class NCX extends Element {
     public NCX(Parcel in, ClassLoader loader) {
         super(in, loader);
         mVersion = in.readString();
-        mXmlLang = in.readString();
+        mLang = in.readString();
         mDir = Direction.fromValue(in.readString());
 
         mHead = in.readParcelable(loader);
@@ -68,7 +68,7 @@ public class NCX extends Element {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(mVersion);
-        dest.writeString(mXmlLang);
+        dest.writeString(mLang);
         dest.writeString(mDir.toString());
 
         dest.writeParcelable(mHead, flags);
@@ -95,7 +95,7 @@ public class NCX extends Element {
     protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
         super.onParseAttributes(parser);
         mVersion = parser.getAttributeValue("", OEBContract.Attributes.VERSION);
-        mXmlLang = parser.getAttributeValue(OEBContract.Namespaces.XML, OEBContract.Attributes.LANG);
+        mLang = parser.getAttributeValue(OEBContract.Namespaces.XML, OEBContract.Attributes.LANG);
         mDir = Direction.fromValue(parser.getAttributeValue("", OEBContract.Attributes.DIR));
     }
 
@@ -147,11 +147,26 @@ public class NCX extends Element {
     }
 
     @Override
+    protected boolean standAlone() {
+        return false;
+    }
+
+    @Override
+    protected void onSerializeDocType(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeDocType(serializer);
+        serializer.docdecl(" ncx PUBLIC \"-//NISO//DTD ncx 2005-1//EN\"\n" +
+            " \"http://www.daisy.org/z3986/2005/ncx-2005-1.dtd\"");
+
+    }
+
+    @Override
     protected void onSerializeAttributes(XmlSerializer serializer)
         throws IOException, IllegalArgumentException, IllegalStateException {
         super.onSerializeAttributes(serializer);
+        serializeValue(serializer, "", OEBContract.Attributes.XMLNS, getElementNamespace());
         serializeValue(serializer, "", OEBContract.Attributes.VERSION, mVersion);
-        serializeValue(serializer, OEBContract.Namespaces.XML, OEBContract.Attributes.LANG, mXmlLang);
+        serializeValue(serializer, OEBContract.Namespaces.XML, OEBContract.Attributes.LANG, mLang);
         serializeValue(serializer, "", OEBContract.Attributes.DIR, mDir.toString());
     }
 
@@ -162,7 +177,6 @@ public class NCX extends Element {
         serialize(serializer, mHead);
         serialize(serializer, mTitle);
         serializeCollection(serializer, mAuthors);
-        serialize(serializer, mNavMap);
         serialize(serializer, mNavMap);
         serialize(serializer, mPageList);
         serialize(serializer, mNavList);

@@ -4,7 +4,7 @@ import android.os.Parcel;
 
 import com.dove.lib.oeb.OEBContract;
 import com.dove.lib.oeb.ParcelableCreator;
-import com.dove.lib.oeb.SimpleTextElement;
+import com.dove.lib.oeb.SimpleElement;
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.SerializedName;
 
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by george on 5/8/14.
  */
-public class NavPoint extends SimpleTextElement {
+public class NavPoint extends SimpleElement {
     @SerializedName(OEBContract.Attributes.CLASS)
     private String mClass;
     @SerializedName(OEBContract.Attributes.PLAY_ORDER)

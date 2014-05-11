@@ -4,6 +4,7 @@ package com.dove.lib.oeb;
  * Created by george on 5/1/14.
  */
 public enum Direction {
+    EMPTY(""),
     /**
      * When the default value is specified, the Author is expressing no preference and
      * the Reading System may chose the rendering direction. This value must be assumed
@@ -31,7 +32,7 @@ public enum Direction {
                 return dir;
             }
         }
-        return DEFAULT;
+        return EMPTY;
     }
 
     @Override

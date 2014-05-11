@@ -10,6 +10,7 @@ import android.content.res.AssetManager;
 import android.database.DataSetObservable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.widget.DrawerLayout;
@@ -31,8 +32,11 @@ import com.dove.reader.ui.controller.DrawerController;
 
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 public class ReaderActivity extends AbstractReaderActivity
     implements DrawerFragment.NavigationDrawerCallbacks, AccountController, DrawerController {
@@ -78,6 +82,17 @@ public class ReaderActivity extends AbstractReaderActivity
             NCX ncx = new NCX();
             ncx.onParse(tocFile);
             LogUtils.i(LOG_TAG, ncx.toString());
+
+            File file = new File(Environment.getExternalStorageDirectory(), "ebooks/");
+            if (!file.exists()) {
+                file.mkdir();
+            }
+            Log.i(LOG_TAG, file.getAbsolutePath());
+            File toc = new File(file, "test.ncx");
+            Log.i(LOG_TAG, toc.getAbsolutePath());
+
+            OutputStream outputStream = new FileOutputStream(toc);
+            ncx.onSrerialize(outputStream);
 
         } catch (IOException | XmlPullParserException e) {
             e.printStackTrace();
