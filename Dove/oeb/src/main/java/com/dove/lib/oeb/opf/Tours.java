@@ -3,12 +3,14 @@ package com.dove.lib.oeb.opf;
 import android.os.Parcel;
 
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleElement;
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,6 +38,8 @@ public class Tours extends SimpleElement {
         super.writeToParcel(dest, flags);
         dest.writeList(mTours);
     }
+
+    public static final ClassLoaderCreator<Tours> CREATOR = new ParcelableCreator<>(Tours.class);
 
     @Override
     protected String getElementName() {
@@ -68,21 +72,10 @@ public class Tours extends SimpleElement {
         }
     }
 
-    public static final ClassLoaderCreator<Tours> CREATOR = new ClassLoaderCreator<Tours>() {
-        @Override
-        public Tours createFromParcel(Parcel source, ClassLoader loader) {
-            return new Tours(source, loader);
-        }
-
-        @Override
-        public Tours createFromParcel(Parcel source) {
-            return new Tours(source, null);
-        }
-
-        @Override
-        public Tours[] newArray(int size) {
-            return new Tours[size];
-        }
-    };
-
+    @Override
+    protected void onSerializeContent(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeContent(serializer);
+        serializeCollection(serializer, mTours);
+    }
 }

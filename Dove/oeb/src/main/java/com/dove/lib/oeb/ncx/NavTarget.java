@@ -3,12 +3,14 @@ package com.dove.lib.oeb.ncx;
 import android.os.Parcel;
 
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleTextElement;
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 import java.util.List;
@@ -52,6 +54,8 @@ public class NavTarget extends SimpleTextElement {
         dest.writeList(mNavLabels);
         dest.writeParcelable(mContent, flags);
     }
+
+    public static final ClassLoaderCreator<NavTarget> CREATOR = new ParcelableCreator<>(NavTarget.class);
 
     @Override
     protected String getElementName() {
@@ -97,20 +101,19 @@ public class NavTarget extends SimpleTextElement {
         }
     }
 
-    public static final ClassLoaderCreator<NavTarget> CREATOR = new ClassLoaderCreator<NavTarget>() {
-        @Override
-        public NavTarget createFromParcel(Parcel source, ClassLoader loader) {
-            return new NavTarget(source, loader);
-        }
+    @Override
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeAttributes(serializer);
+        serializeValue(serializer, "", OEBContract.Attributes.CLASS, mClass);
+        serializeValue(serializer, "", OEBContract.Attributes.PLAY_ORDER, String.valueOf(mPlayOrder));
+        serializeValue(serializer, "", OEBContract.Attributes.VALUE, mValue);
+    }
 
-        @Override
-        public NavTarget createFromParcel(Parcel source) {
-            return new NavTarget(source, null);
-        }
-
-        @Override
-        public NavTarget[] newArray(int size) {
-            return new NavTarget[size];
-        }
-    };
+    @Override
+    protected void onSerializeContent(XmlSerializer serializer) throws IOException {
+        super.onSerializeContent(serializer);
+        serializeCollection(serializer, mNavLabels);
+        serialize(serializer, mContent);
+    }
 }

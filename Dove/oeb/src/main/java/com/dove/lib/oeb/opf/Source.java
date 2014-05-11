@@ -3,6 +3,7 @@ package com.dove.lib.oeb.opf;
 import android.os.Parcel;
 
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleTextElement;
 
 public class Source extends SimpleTextElement {
@@ -24,20 +25,5 @@ public class Source extends SimpleTextElement {
         return OEBContract.Namespaces.DC;
     }
 
-    public static final ClassLoaderCreator<Source> CREATOR = new ClassLoaderCreator<Source>() {
-        @Override
-        public Source createFromParcel(Parcel source, ClassLoader loader) {
-            return new Source(source, loader);
-        }
-
-        @Override
-        public Source createFromParcel(Parcel source) {
-            return new Source(source, null);
-        }
-
-        @Override
-        public Source[] newArray(int size) {
-            return new Source[size];
-        }
-    };
+    public static final ClassLoaderCreator<Source> CREATOR = new ParcelableCreator<>(Source.class);
 }

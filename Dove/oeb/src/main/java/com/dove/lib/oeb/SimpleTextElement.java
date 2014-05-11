@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 
@@ -55,22 +56,8 @@ public class SimpleTextElement extends TextElement {
         return Objects.hashCode(super.hashCode(), mId);
     }
 
-    public static final ClassLoaderCreator<SimpleTextElement> CREATOR = new ClassLoaderCreator<SimpleTextElement>() {
-        @Override
-        public SimpleTextElement createFromParcel(Parcel source, ClassLoader loader) {
-            return new SimpleTextElement(source, loader);
-        }
-
-        @Override
-        public SimpleTextElement createFromParcel(Parcel source) {
-            return new SimpleTextElement(source, null);
-        }
-
-        @Override
-        public SimpleTextElement[] newArray(int size) {
-            return new SimpleTextElement[size];
-        }
-    };
+    public static final ClassLoaderCreator<SimpleTextElement> CREATOR =
+        new ParcelableCreator<>(SimpleTextElement.class);
 
     @Override
     protected String getElementName() {
@@ -81,5 +68,12 @@ public class SimpleTextElement extends TextElement {
     protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
         super.onParseAttributes(parser);
         mId = parser.getAttributeValue("", mId);
+    }
+
+    @Override
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeAttributes(serializer);
+        serializeValue(serializer, "", OEBContract.Attributes.ID, mId);
     }
 }

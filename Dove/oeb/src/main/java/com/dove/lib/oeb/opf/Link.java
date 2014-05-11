@@ -3,11 +3,13 @@ package com.dove.lib.oeb.opf;
 import android.os.Parcel;
 
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleElement;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 
@@ -45,6 +47,8 @@ public class Link extends SimpleElement {
         dest.writeString(mMediaType);
     }
 
+    public static final ClassLoaderCreator<Link> CREATOR = new ParcelableCreator<>(Link.class);
+
     @Override
     protected String getElementName() {
         return OEBContract.Elements.LINK;
@@ -59,20 +63,14 @@ public class Link extends SimpleElement {
         mMediaType = parser.getAttributeValue("", OEBContract.Attributes.MEDIA_TYPE);
     }
 
-    public static final ClassLoaderCreator<Link> CREATOR = new ClassLoaderCreator<Link>() {
-        @Override
-        public Link createFromParcel(Parcel source, ClassLoader loader) {
-            return new Link(source, loader);
-        }
+    @Override
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeAttributes(serializer);
+        serializeValue(serializer, "", OEBContract.Attributes.HANDLER, mHref);
+        serializeValue(serializer, "", OEBContract.Attributes.REL, mRel);
+        serializeValue(serializer, "", OEBContract.Attributes.REFINES, mRefines);
+        serializeValue(serializer, "", OEBContract.Attributes.MEDIA_TYPE, mMediaType);
 
-        @Override
-        public Link createFromParcel(Parcel source) {
-            return new Link(source, null);
-        }
-
-        @Override
-        public Link[] newArray(int size) {
-            return new Link[size];
-        }
-    };
+    }
 }

@@ -4,6 +4,7 @@ import android.os.Parcel;
 
 import com.dove.lib.oeb.ComplexTextElement;
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 
 /**
  * Created by george on 5/4/14.
@@ -27,20 +28,5 @@ public final class Rights extends ComplexTextElement {
         return OEBContract.Namespaces.DC;
     }
 
-    public static final ClassLoaderCreator<Rights> CREATOR = new ClassLoaderCreator<Rights>() {
-        @Override
-        public Rights createFromParcel(Parcel source, ClassLoader loader) {
-            return new Rights(source, loader);
-        }
-
-        @Override
-        public Rights createFromParcel(Parcel source) {
-            return new Rights(source, null);
-        }
-
-        @Override
-        public Rights[] newArray(int size) {
-            return new Rights[size];
-        }
-    };
+    public static final ClassLoaderCreator<Rights> CREATOR = new ParcelableCreator<>(Rights.class);
 }

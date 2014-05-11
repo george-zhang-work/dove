@@ -2,6 +2,7 @@ package com.dove.lib.oeb;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.util.Xml;
 
 import com.dove.common.log.LogTag;
@@ -15,6 +16,7 @@ import org.xmlpull.v1.XmlSerializer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collection;
 
 /**
  * Created by george on 5/5/14.
@@ -55,6 +57,8 @@ public class Element implements Parcelable, Parserable, Serializerable {
         return new GsonBuilder().setPrettyPrinting().create().toJson(this);
     }
 
+    public static final ClassLoaderCreator<Element> CREATOR = new ParcelableCreator<>(Element.class);
+
     protected String getElementName() {
         return OEBContract.Elements.ELEMENT;
     }
@@ -67,8 +71,6 @@ public class Element implements Parcelable, Parserable, Serializerable {
     public final void onParse(InputStream inputStream) throws XmlPullParserException, IOException {
         final XmlPullParser parser = Xml.newPullParser();
         parser.setInput(inputStream, getEncoding());
-        Xml.newSerializer();
-
         int eventType = parser.getEventType();
         while (eventType != XmlPullParser.END_DOCUMENT) {
             if (eventType == XmlPullParser.START_TAG
@@ -94,31 +96,59 @@ public class Element implements Parcelable, Parserable, Serializerable {
     }
 
     @Override
-    public void onSrerialize(OutputStream outputStream) throws IOException {
+    public void onSrerialize(OutputStream outputStream)
+        throws IOException, IllegalArgumentException, IllegalStateException {
         final XmlSerializer serializer = Xml.newSerializer();
         serializer.setOutput(outputStream, getEncoding());
         serializer.startDocument(getEncoding(), standAlone());
         onSerializeDocType(serializer);
         onSerialize(serializer);
         serializer.endDocument();
+        serializer.flush();
     }
 
     @Override
-    public void onSerialize(XmlSerializer serializer) throws IOException {
+    public void onSerialize(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
         serializer.startTag(getElementNamespace(), getElementName());
         onSerializeAttributes(serializer);
         onSerializeContent(serializer);
         serializer.endTag(getElementNamespace(), getElementName());
+        serializer.flush();
     }
 
-    protected void onSerializeDocType(XmlSerializer serializer) {
+    protected void onSerializeDocType(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
     }
 
-    protected void onSerializeAttributes(XmlSerializer serializer) {
-
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
     }
 
-    private void onSerializeContent(XmlSerializer serializer) {
+    protected void onSerializeContent(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+    }
 
+    protected void serialize(XmlSerializer serializer, Serializerable serializerable)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        if (serializerable != null) {
+            serializerable.onSerialize(serializer);
+        }
+    }
+
+    protected void serializeValue(XmlSerializer serializer, String namespace, String name, String value)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        if (!TextUtils.isEmpty(value)) {
+            serializer.attribute(namespace, name, value);
+        }
+    }
+
+    protected void serializeCollection(XmlSerializer serializer, Collection<? extends Serializerable> serializerables)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        if (serializerables != null) {
+            for (Serializerable serializerable : serializerables) {
+                serializerable.onSerialize(serializer);
+            }
+        }
     }
 }

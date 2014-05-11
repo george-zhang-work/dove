@@ -3,12 +3,14 @@ package com.dove.lib.oeb.opf;
 import android.os.Parcel;
 
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleElement;
 import com.google.common.base.Objects;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 
@@ -29,6 +31,8 @@ public class Site extends SimpleElement {
         mTitle = in.readString();
         mHref = in.readString();
     }
+
+    public static final ClassLoaderCreator<Site> CREATOR = new ParcelableCreator<>(Site.class);
 
     @Override
     protected String getElementName() {
@@ -56,20 +60,11 @@ public class Site extends SimpleElement {
         mHref = parser.getAttributeValue("", OEBContract.Attributes.HREF);
     }
 
-    public static final ClassLoaderCreator<Site> CREATOR = new ClassLoaderCreator<Site>() {
-        @Override
-        public Site createFromParcel(Parcel source, ClassLoader loader) {
-            return new Site(source, loader);
-        }
-
-        @Override
-        public Site createFromParcel(Parcel source) {
-            return new Site(source, null);
-        }
-
-        @Override
-        public Site[] newArray(int size) {
-            return new Site[size];
-        }
-    };
+    @Override
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeAttributes(serializer);
+        serializeValue(serializer, "", OEBContract.Attributes.TITLE, mTitle);
+        serializeValue(serializer, "", OEBContract.Attributes.HREF, mHref);
+    }
 }

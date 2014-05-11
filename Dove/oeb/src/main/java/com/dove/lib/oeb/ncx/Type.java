@@ -23,4 +23,9 @@ public enum Type {
         }
         return EMPTY;
     }
+
+    @Override
+    public String toString() {
+        return mValue;
+    }
 }

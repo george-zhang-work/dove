@@ -4,12 +4,14 @@ import android.os.Parcel;
 
 import com.dove.lib.oeb.Element;
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.opf.Meta20;
 import com.google.common.base.Objects;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 
@@ -44,11 +46,6 @@ public class Meta extends Element {
     }
 
     @Override
-    protected String getElementName() {
-        return OEBContract.Elements.META;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Meta20)) return false;
@@ -63,6 +60,13 @@ public class Meta extends Element {
         return Objects.hashCode(mName, mContent);
     }
 
+    public static final ClassLoaderCreator<Meta> CREATOR = new ParcelableCreator<>(Meta.class);
+
+    @Override
+    protected String getElementName() {
+        return OEBContract.Elements.META;
+    }
+
     @Override
     protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
         super.onParseAttributes(parser);
@@ -71,4 +75,12 @@ public class Meta extends Element {
         mScheme = parser.getAttributeValue("", OEBContract.Attributes.SCHEME);
     }
 
+    @Override
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeAttributes(serializer);
+        serializeValue(serializer, "", OEBContract.Attributes.NAME, mName);
+        serializeValue(serializer, "", OEBContract.Attributes.CONTENT, mContent);
+        serializeValue(serializer, "", OEBContract.Attributes.SCHEME, mScheme);
+    }
 }

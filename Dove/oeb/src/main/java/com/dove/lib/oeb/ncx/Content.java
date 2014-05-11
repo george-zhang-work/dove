@@ -3,11 +3,13 @@ package com.dove.lib.oeb.ncx;
 import android.os.Parcel;
 
 import com.dove.lib.oeb.OEBContract;
+import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleElement;
 import com.google.gson.annotations.SerializedName;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 
@@ -33,6 +35,8 @@ public class Content extends SimpleElement {
         dest.writeString(mSrc);
     }
 
+    public static final ClassLoaderCreator<Content> CREATOR = new ParcelableCreator<>(Content.class);
+
     @Override
     protected String getElementName() {
         return OEBContract.Elements.CONTENT;
@@ -44,20 +48,10 @@ public class Content extends SimpleElement {
         mSrc = parser.getAttributeValue("", OEBContract.Attributes.SRC);
     }
 
-    public static final ClassLoaderCreator<Content> CREATOR = new ClassLoaderCreator<Content>() {
-        @Override
-        public Content createFromParcel(Parcel source, ClassLoader loader) {
-            return new Content(source, loader);
-        }
-
-        @Override
-        public Content createFromParcel(Parcel source) {
-            return new Content(source, null);
-        }
-
-        @Override
-        public Content[] newArray(int size) {
-            return new Content[size];
-        }
-    };
+    @Override
+    protected void onSerializeAttributes(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.onSerializeAttributes(serializer);
+        serializeValue(serializer, "", OEBContract.Attributes.SRC, mSrc);
+    }
 }
