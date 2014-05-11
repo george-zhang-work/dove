@@ -67,7 +67,7 @@ public class SimpleTextElement extends TextElement {
     @Override
     protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
         super.onParseAttributes(parser);
-        mId = parser.getAttributeValue("", mId);
+        mId = parser.getAttributeValue("", OEBContract.Attributes.ID);
     }
 
     @Override

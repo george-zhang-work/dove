@@ -19,7 +19,7 @@ import java.io.IOException;
  */
 public class Package extends SimpleElement {
 
-    @SerializedName(OEBContract.Attributes.VERSION)
+        @SerializedName(OEBContract.Attributes.VERSION)
     private String mVersion;
     @SerializedName(OEBContract.Attributes.UNIQUE_IDENTIFIER)
     private String mUniqueIdentifier;
@@ -84,6 +84,11 @@ public class Package extends SimpleElement {
     @Override
     protected String getElementName() {
         return OEBContract.Elements.PACKAGE;
+    }
+
+    @Override
+    protected String getElementNamespace() {
+        return OEBContract.Namespaces.OPF;
     }
 
     @Override

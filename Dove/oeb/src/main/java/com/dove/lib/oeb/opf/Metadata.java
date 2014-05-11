@@ -200,7 +200,7 @@ public class Metadata extends Element {
 
     @Override
     protected String getElementNamespace() {
-        return OEBContract.Namespaces.DC;
+        return OEBContract.Namespaces.OPF;
     }
 
     @Override
@@ -311,7 +311,14 @@ public class Metadata extends Element {
                         break;
 
                 }
+            } else if (eventType == XmlPullParser.END_TAG) {
+                switch (parser.getName()) {
+                    case OEBContract.Elements.METADATA:
+                        return;
+                }
+
             }
+            eventType = parser.next();
         }
     }
 

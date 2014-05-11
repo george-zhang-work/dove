@@ -80,7 +80,7 @@ public class Item extends SimpleElement {
 
     @Override
     protected String getElementName() {
-        return OEBContract.Elements.RESOURCE;
+        return OEBContract.Elements.ITEM;
     }
 
     @Override

@@ -57,7 +57,7 @@ public class Manifest extends SimpleElement {
                     case OEBContract.Elements.ITEM:
                         final Item item = new Item();
                         item.onParse(parser);
-                        mResources.put(item.getHref(), item);
+                        mResources.put(item.getId(), item);
                         break;
                 }
 

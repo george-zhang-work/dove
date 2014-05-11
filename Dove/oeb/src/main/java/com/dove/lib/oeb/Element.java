@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Xml;
 
 import com.dove.common.log.LogTag;
+import com.dove.common.log.LogUtils;
 import com.google.common.base.Objects;
 import com.google.gson.GsonBuilder;
 
@@ -88,6 +89,7 @@ public class Element implements Parcelable, Parserable, Serializerable {
 
     @Override
     public final void onParse(XmlPullParser parser) throws XmlPullParserException, IOException {
+        LogUtils.i(LOG_TAG, "%s : %s", parser.getNamespace(), parser.getName());
         parser.require(XmlPullParser.START_TAG, getElementNamespace(), getElementName());
         onParseAttributes(parser);
         onParseContent(parser);
