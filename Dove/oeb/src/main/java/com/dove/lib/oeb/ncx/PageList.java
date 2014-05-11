@@ -57,7 +57,7 @@ public class PageList extends SimpleElement {
 
     @Override
     protected String getElementName() {
-        return OEBContract.Elements.NAV_MAP;
+        return OEBContract.Elements.PAGE_LIST;
     }
 
     @Override

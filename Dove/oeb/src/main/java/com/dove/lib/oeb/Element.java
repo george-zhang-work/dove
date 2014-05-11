@@ -67,6 +67,10 @@ public class Element implements Parcelable, Parserable, Serializerable {
         return OEBContract.Namespaces.ANY;
     }
 
+    protected String getElementNamespacePrefix() {
+        return OEBContract.NamespacePrefix.ANY;
+    }
+
     @Override
     public final void onParse(InputStream inputStream) throws XmlPullParserException, IOException {
         final XmlPullParser parser = Xml.newPullParser();
@@ -96,10 +100,11 @@ public class Element implements Parcelable, Parserable, Serializerable {
     }
 
     @Override
-    public void onSrerialize(OutputStream outputStream)
+    public final void onSrerialize(OutputStream outputStream)
         throws IOException, IllegalArgumentException, IllegalStateException {
         final XmlSerializer serializer = Xml.newSerializer();
         serializer.setOutput(outputStream, getEncoding());
+        serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
         serializer.startDocument(getEncoding(), standAlone());
         onSerializeDocType(serializer);
         onSerialize(serializer);
@@ -108,12 +113,12 @@ public class Element implements Parcelable, Parserable, Serializerable {
     }
 
     @Override
-    public void onSerialize(XmlSerializer serializer)
+    public final void onSerialize(XmlSerializer serializer)
         throws IOException, IllegalArgumentException, IllegalStateException {
-        serializer.startTag(getElementNamespace(), getElementName());
+        serializer.startTag(getElementNamespacePrefix(), getElementName());
         onSerializeAttributes(serializer);
         onSerializeContent(serializer);
-        serializer.endTag(getElementNamespace(), getElementName());
+        serializer.endTag(getElementNamespacePrefix(), getElementName());
         serializer.flush();
     }
 
