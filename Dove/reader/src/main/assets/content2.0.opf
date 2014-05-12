@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="uuid_id" version="2.0">
+  <metadata xmlns:calibre="http://calibre.kovidgoyal.net/2009/metadata" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:opf="http://www.idpf.org/2007/opf" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <dc:identifier id="uuid_id" opf:scheme="uuid">56765af0-4b65-471b-acdf-257bb964eb25</dc:identifier>
+    <dc:title>Free as in Freedom (2.0): Richard Stallman and the Free Software Revolution</dc:title>
+    <dc:identifier opf:scheme="ISBN">9780983159216</dc:identifier>
+    <dc:rights>Copyright © 2002, 2010 Sam Williams Copyright © 2010 Richard M. Stallman Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.3 or any later version published by the Free Software Foundation; with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the license is included in the section entitled “GNU Free Documentation License.”</dc:rights>
+    <dc:creator opf:role="aut">Sam Williams and Richard M. Stallman</dc:creator>
+    <dc:description>This is Free as in Freedom 2.0: Richard Stallman and the Free Software Revolution, a revision of Free as in Freedom: Richard Stallman’s Crusade for Free Software. Copyright © 2002, 2010 Sam Williams Copyright © 2010 Richard M. Stallman Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.3 or any later version published by the Free Software Foundation; with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the license is included in the section entitled “GNU Free Documentation License.” Published by the Free Software Foundation 51 Franklin St., Fifth Floor Boston, MA 02110-1335 USA ISBN: 9780983159216 The cover photograph of Richard Stallman is by Peter Hinely. The PDP-10 photograph in Chapter 7 is by Rodney Brooks. The photograph of St. IGNUcius in Chapter 8 is by Stian Eikeland.</dc:description>
+    <dc:publisher>Free Software Foundation 51 Franklin St., Fifth Floor Boston, MA 02110-1335 USA</dc:publisher>
+    <dc:language>en</dc:language>
+    <meta content="2011-09-28T06:50:11.480668+00:00" name="calibre:timestamp" />
+    <meta content="0.4.2" name="Sigil version" />
+  </metadata>
+  <manifest>
+    <item href="Images/faif-2.00x.png" id="added1" media-type="image/png" />
+    <item href="Images/faif-2.01x.png" id="added2" media-type="image/png" />
+    <item href="Text/faif2_split_000.html" id="html21" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_001.html" id="html20" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_002.html" id="html19" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_003.html" id="html18" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_004.html" id="html17" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_005.html" id="html16" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_006.html" id="html15" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_007.html" id="html14" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_008.html" id="html13" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_009.html" id="html12" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_010.html" id="html11" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_011.html" id="html10" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_012.html" id="html9" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_013.html" id="html8" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_014.html" id="html7" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_015.html" id="html6" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_016.html" id="html5" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_017.html" id="html4" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_018.html" id="html3" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_019.html" id="html2" media-type="application/xhtml+xml" />
+    <item href="Text/faif2_split_020.html" id="html1" media-type="application/xhtml+xml" />
+    <item href="Styles/stylesheet.css" id="css" media-type="text/css" />
+    <item href="toc.ncx" id="ncx" media-type="application/x-dtbncx+xml" />
+  </manifest>
+  <spine toc="ncx">
+    <itemref idref="html21" />
+    <itemref idref="html20" />
+    <itemref idref="html19" />
+    <itemref idref="html18" />
+    <itemref idref="html17" />
+    <itemref idref="html16" />
+    <itemref idref="html15" />
+    <itemref idref="html14" />
+    <itemref idref="html13" />
+    <itemref idref="html12" />
+    <itemref idref="html11" />
+    <itemref idref="html10" />
+    <itemref idref="html9" />
+    <itemref idref="html8" />
+    <itemref idref="html7" />
+    <itemref idref="html6" />
+    <itemref idref="html5" />
+    <itemref idref="html4" />
+    <itemref idref="html3" />
+    <itemref idref="html2" />
+    <itemref idref="html1" />
+  </spine>
+  <guide />
+</package>

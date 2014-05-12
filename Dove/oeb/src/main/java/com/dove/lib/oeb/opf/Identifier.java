@@ -6,7 +6,11 @@ import com.dove.lib.oeb.OEBContract;
 import com.dove.lib.oeb.ParcelableCreator;
 import com.dove.lib.oeb.SimpleTextElement;
 
+import java.util.List;
+
 public class Identifier extends SimpleTextElement {
+    private List<Meta> mMetas;
+
     public Identifier() {
         super();
     }
@@ -26,4 +30,5 @@ public class Identifier extends SimpleTextElement {
     protected String getElementNamespace() {
         return OEBContract.Namespaces.DC;
     }
+
 }

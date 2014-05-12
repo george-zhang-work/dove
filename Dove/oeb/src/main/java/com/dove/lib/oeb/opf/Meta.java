@@ -22,17 +22,23 @@ public class Meta extends SimpleTextElement {
     @SerializedName(OEBContract.Attributes.REFINES)
     private String mRefines;
     @SerializedName(OEBContract.Attributes.PROPERTY)
-    private Property mProperty;
+    private String mProperty;
     @SerializedName(OEBContract.Attributes.SCHEME)
     private String mScheme;
 
     public Meta() {
     }
 
+    public Meta(String refines, String property, String scheme) {
+        mRefines = refines;
+        mProperty = property;
+        mScheme = scheme;
+    }
+
     public Meta(Parcel in, ClassLoader loader) {
         super(in, loader);
         mRefines = in.readString();
-        mProperty = Property.fromValue(in.readString());
+        mProperty = in.readString();
         mScheme = in.readString();
     }
 
@@ -40,8 +46,8 @@ public class Meta extends SimpleTextElement {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(mRefines);
-        dest.writeString(mProperty.toString());
-        dest.writeString(mScheme.toString());
+        dest.writeString(mProperty);
+        dest.writeString(mScheme);
     }
 
     @Override
@@ -63,14 +69,6 @@ public class Meta extends SimpleTextElement {
         return mRefines;
     }
 
-    public Property getProperty() {
-        return mProperty;
-    }
-
-    public String getScheme() {
-        return mScheme;
-    }
-
     public static final Parcelable.ClassLoaderCreator<Meta> CREATOR = new ParcelableCreator<>(Meta.class);
 
     @Override
@@ -81,7 +79,7 @@ public class Meta extends SimpleTextElement {
     @Override
     protected void onParseAttributes(XmlPullParser parser) throws XmlPullParserException, IOException {
         super.onParseAttributes(parser);
-        mProperty = Property.fromValue(parser.getAttributeValue("", OEBContract.Attributes.PROPERTY));
+        mProperty = parser.getAttributeValue("", OEBContract.Attributes.PROPERTY);
         mRefines = parser.getAttributeValue("", OEBContract.Attributes.REFINES);
         mScheme = parser.getAttributeValue("", OEBContract.Attributes.SCHEME);
     }
@@ -90,8 +88,8 @@ public class Meta extends SimpleTextElement {
     protected void onSerializeAttributes(XmlSerializer serializer)
         throws IOException, IllegalArgumentException, IllegalStateException {
         super.onSerializeAttributes(serializer);
-        serializeValue(serializer, "", OEBContract.Attributes.PROPERTY, mProperty.toString());
         serializeValue(serializer, "", OEBContract.Attributes.REFINES, mRefines);
+        serializeValue(serializer, "", OEBContract.Attributes.PROPERTY, mProperty);
         serializeValue(serializer, "", OEBContract.Attributes.SCHEME, mScheme);
     }
 }

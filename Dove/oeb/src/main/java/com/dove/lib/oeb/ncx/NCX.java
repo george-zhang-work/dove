@@ -152,6 +152,13 @@ public class NCX extends Element {
     }
 
     @Override
+    protected void setPrefix(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.setPrefix(serializer);
+        serializer.setPrefix(OEBContract.Namespaces.Prefix.ANY, OEBContract.Namespaces.NCX);
+    }
+
+    @Override
     protected void onSerializeDocType(XmlSerializer serializer)
         throws IOException, IllegalArgumentException, IllegalStateException {
         super.onSerializeDocType(serializer);
@@ -164,7 +171,6 @@ public class NCX extends Element {
     protected void onSerializeAttributes(XmlSerializer serializer)
         throws IOException, IllegalArgumentException, IllegalStateException {
         super.onSerializeAttributes(serializer);
-        serializeValue(serializer, "", OEBContract.Attributes.XMLNS, getElementNamespace());
         serializeValue(serializer, "", OEBContract.Attributes.VERSION, mVersion);
         serializeValue(serializer, OEBContract.Namespaces.XML, OEBContract.Attributes.LANG, mLang);
         serializeValue(serializer, "", OEBContract.Attributes.DIR, mDir.toString());

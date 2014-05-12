@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.util.Xml;
 
 import com.dove.common.log.LogTag;
-import com.dove.common.log.LogUtils;
 import com.google.common.base.Objects;
 import com.google.gson.GsonBuilder;
 
@@ -68,8 +67,8 @@ public class Element implements Parcelable, Parserable, Serializerable {
         return OEBContract.Namespaces.ANY;
     }
 
-    protected String getElementNamespacePrefix() {
-        return OEBContract.NamespacePrefix.ANY;
+    protected String generateId() {
+        return String.valueOf(System.nanoTime());
     }
 
     @Override
@@ -89,7 +88,6 @@ public class Element implements Parcelable, Parserable, Serializerable {
 
     @Override
     public final void onParse(XmlPullParser parser) throws XmlPullParserException, IOException {
-        LogUtils.i(LOG_TAG, "%s : %s", parser.getNamespace(), parser.getName());
         parser.require(XmlPullParser.START_TAG, getElementNamespace(), getElementName());
         onParseAttributes(parser);
         onParseContent(parser);
@@ -117,14 +115,19 @@ public class Element implements Parcelable, Parserable, Serializerable {
     @Override
     public final void onSerialize(XmlSerializer serializer)
         throws IOException, IllegalArgumentException, IllegalStateException {
-        serializer.startTag(getElementNamespacePrefix(), getElementName());
+        setPrefix(serializer);
+        serializer.startTag(getElementNamespace(), getElementName());
         onSerializeAttributes(serializer);
         onSerializeContent(serializer);
-        serializer.endTag(getElementNamespacePrefix(), getElementName());
+        serializer.endTag(getElementNamespace(), getElementName());
         serializer.flush();
     }
 
     protected void onSerializeDocType(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+    }
+
+    protected void setPrefix(XmlSerializer serializer)
         throws IOException, IllegalArgumentException, IllegalStateException {
     }
 
@@ -143,18 +146,20 @@ public class Element implements Parcelable, Parserable, Serializerable {
         }
     }
 
-    protected void serializeValue(XmlSerializer serializer, String namespace, String name, String value)
+    protected void serializeValue(XmlSerializer serializer, String namespace,
+                                  String name, String value)
         throws IOException, IllegalArgumentException, IllegalStateException {
         if (!TextUtils.isEmpty(value)) {
             serializer.attribute(namespace, name, value);
         }
     }
 
-    protected void serializeCollection(XmlSerializer serializer, Collection<? extends Serializerable> serializerables)
+    protected void serializeCollection(XmlSerializer serializer,
+                                       Collection<? extends Serializerable> serializerables)
         throws IOException, IllegalArgumentException, IllegalStateException {
         if (serializerables != null) {
             for (Serializerable serializerable : serializerables) {
-                serializerable.onSerialize(serializer);
+                serialize(serializer, serializerable);
             }
         }
     }

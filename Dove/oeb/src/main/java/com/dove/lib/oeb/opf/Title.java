@@ -10,7 +10,7 @@ import com.dove.lib.oeb.ParcelableCreator;
 /**
  * Created by george on 5/4/14.
  */
-public final class Title extends ComplexTextElement {
+public class Title extends ComplexTextElement {
 
     public Title() {
     }

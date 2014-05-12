@@ -19,7 +19,7 @@ import java.io.IOException;
  */
 public class Package extends SimpleElement {
 
-        @SerializedName(OEBContract.Attributes.VERSION)
+    @SerializedName(OEBContract.Attributes.VERSION)
     private String mVersion;
     @SerializedName(OEBContract.Attributes.UNIQUE_IDENTIFIER)
     private String mUniqueIdentifier;
@@ -152,11 +152,17 @@ public class Package extends SimpleElement {
     }
 
     @Override
+    protected void setPrefix(XmlSerializer serializer) throws IOException, IllegalArgumentException, IllegalStateException {
+        super.setPrefix(serializer);
+        serializer.setPrefix(OEBContract.Namespaces.Prefix.ANY, OEBContract.Namespaces.OPF);
+    }
+
+    @Override
     protected void onSerializeAttributes(XmlSerializer serializer)
         throws IOException, IllegalArgumentException, IllegalStateException {
         super.onSerializeAttributes(serializer);
         serializeValue(serializer, "", OEBContract.Attributes.VERSION, mVersion);
-        serializeValue(serializer, "", OEBContract.Attributes.LANG, mXmlLang);
+        serializeValue(serializer, OEBContract.Namespaces.XML, OEBContract.Attributes.LANG, mXmlLang);
         serializeValue(serializer, "", OEBContract.Attributes.UNIQUE_IDENTIFIER, mUniqueIdentifier);
         serializeValue(serializer, "", OEBContract.Attributes.DIR, mDir.toString());
         serializeValue(serializer, "", OEBContract.Attributes.PREFIX, mPrefix);

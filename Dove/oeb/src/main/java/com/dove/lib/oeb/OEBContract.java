@@ -42,7 +42,8 @@ public final class OEBContract {
         public static final String CLASS = "class";
         public static final String PLAY_ORDER = "playOrder";
         public static final String VALUE = "value";
-        public static final String XMLNS = "xmlns";
+        public static final String ROLE = "role";
+        public static final String FILE_AS = "file-as";
     }
 
     public interface ElementType extends ElementsAndAttributes {
@@ -150,10 +151,21 @@ public final class OEBContract {
         public static final String OPF = "http://www.idpf.org/2007/opf";
         public static final String DC = "http://purl.org/dc/elements/1.1/";
         public static final String NCX = "http://www.daisy.org/z3986/2005/ncx/";
-    }
+        public static final String CALIBRE = "http://calibre.kovidgoyal.net/2009/metadata";
+        public static final String DCTERMS = "http://purl.org/dc/terms/";
+        public static final String XSI = "http://www.w3.org/2001/XMLSchema-instance";
 
-    public interface NamespacePrefix {
-        public static final String ANY = null;
-        public static final String XML = "xml";
+        public interface Prefix {
+            public static final String XMLNS = "xmlns";
+            public static final String ANY = null;
+            public static final String XML = "xml";
+            public static final String OPF = "opf";
+            public static final String DC = "dc";
+            public static final String NCX = "ncx";
+            public static final String CALIBRE = "calibre";
+            public static final String DCTERMS = "dcterms";
+            public static final String XSI = "xsi";
+        }
+
     }
 }

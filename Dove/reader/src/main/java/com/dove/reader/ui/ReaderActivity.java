@@ -10,6 +10,7 @@ import android.content.res.AssetManager;
 import android.database.DataSetObservable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.widget.DrawerLayout;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import com.dove.common.log.LogTag;
 import com.dove.common.log.LogUtils;
+import com.dove.lib.oeb.ncx.NCX;
 import com.dove.lib.oeb.opf.Package;
 import com.dove.reader.R;
 import com.dove.reader.ui.controller.AccountController;
@@ -31,8 +33,11 @@ import com.dove.reader.ui.controller.DrawerController;
 
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 public class ReaderActivity extends AbstractReaderActivity
     implements DrawerFragment.NavigationDrawerCallbacks, AccountController, DrawerController {
@@ -74,7 +79,7 @@ public class ReaderActivity extends AbstractReaderActivity
         AssetManager assetManager = getAssets();
         Log.d(LOG_TAG, "Begin to read all the file in assets");
         try {
-          /*  InputStream tocFile = assetManager.open("toc.ncx");
+            InputStream tocFile = assetManager.open("toc.ncx");
             NCX ncx = new NCX();
             ncx.onParse(tocFile);
             LogUtils.i(LOG_TAG, ncx.toString());
@@ -84,16 +89,21 @@ public class ReaderActivity extends AbstractReaderActivity
                 file.mkdir();
             }
             Log.i(LOG_TAG, file.getAbsolutePath());
-            File toc = new File(file, "test.ncx");
+            File toc = new File(file, "toc_test.ncx");
             Log.i(LOG_TAG, toc.getAbsolutePath());
 
             OutputStream outputStream = new FileOutputStream(toc);
-            ncx.onSrerialize(outputStream); */
+            ncx.onSrerialize(outputStream);
 
-            InputStream opfFile = assetManager.open("content.opf");
+            InputStream opfFile = assetManager.open("content2.0.opf");
             com.dove.lib.oeb.opf.Package pkg = new Package();
             pkg.onParse(opfFile);
             LogUtils.i(LOG_TAG, pkg.toString());
+
+            File opf = new File(file, "opf_test.opf");
+            Log.i(LOG_TAG, opf.getAbsolutePath());
+            OutputStream opfOutputStream = new FileOutputStream(opf);
+            pkg.onSrerialize(opfOutputStream);
 
         } catch (IOException | XmlPullParserException e) {
             e.printStackTrace();

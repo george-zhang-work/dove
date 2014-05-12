@@ -1,10 +1,14 @@
 package com.dove.lib.oeb.opf;
 
 import android.os.Parcel;
+import android.text.TextUtils;
 
 import com.dove.lib.oeb.Element;
 import com.dove.lib.oeb.OEBContract;
 import com.dove.lib.oeb.ParcelableCreator;
+import com.dove.lib.oeb.Serializerable;
+import com.dove.lib.oeb.SimpleElement;
+import com.dove.lib.oeb.SimpleTextElement;
 import com.google.common.base.Objects;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Lists;
@@ -27,55 +31,39 @@ public class Metadata extends Element {
 
     @SerializedName(OEBContract.Elements.DATE)
     private Date mDate;
-
     @SerializedName(OEBContract.Elements.SOURCE)
     private Source mSource;
-
     @SerializedName(OEBContract.Elements.TYPE)
     private Type mType;
 
     @SerializedName(OEBContract.Elements.IDENTIFIERS)
     private final List<Identifier> mIdentifiers;
-
     @SerializedName(OEBContract.Elements.TITLES)
     private final List<Title> mTitles;
-
     @SerializedName(OEBContract.Elements.LANGUAGES)
     private final List<Language> mLanguages;
-
     @SerializedName(OEBContract.Elements.CONTRIBUTORS)
     private final List<Contributor> mContributors;
-
     @SerializedName(OEBContract.Elements.CREATORS)
     private final List<Author> mAuthors;
-
     @SerializedName(OEBContract.Elements.COVERAGES)
     private final List<Coverage> mCoverages;
-
     @SerializedName(OEBContract.Elements.DESCRIPTIONS)
     private final List<Description> mDescriptions;
-
     @SerializedName(OEBContract.Elements.FORMATS)
     private final List<Format> mFormats;
-
     @SerializedName(OEBContract.Elements.PUBLISHERS)
     private final List<Publisher> mPublishers;
-
     @SerializedName(OEBContract.Elements.RELATIONS)
     private final List<Relation> mRelations;
-
     @SerializedName(OEBContract.Elements.RIGHTSES)
     private final List<Rights> mRightses;
-
     @SerializedName(OEBContract.Elements.SUBJECTS)
     private final List<Subject> mSubjects;
-
     @SerializedName(OEBContract.Elements.METAS)
     private final Multimap<String, Meta> mMetas;
-
     @SerializedName(OEBContract.Elements.META20S)
-    private final Multimap<String, Meta20> mMeta20s;
-
+    private final List<Meta20> mMeta20s;
     @SerializedName(OEBContract.Elements.LINKS)
     private final List<Link> mLinks;
 
@@ -94,8 +82,7 @@ public class Metadata extends Element {
         mSubjects = Lists.newArrayList();
         mLinks = Lists.newArrayList();
         mMetas = LinkedHashMultimap.create();
-        mMeta20s = LinkedHashMultimap.create();
-
+        mMeta20s = Lists.newArrayList();
     }
 
     public Metadata(Parcel in, ClassLoader loader) {
@@ -116,6 +103,7 @@ public class Metadata extends Element {
         mRightses = in.readArrayList(loader);
         mSubjects = in.readArrayList(loader);
         mLinks = in.readArrayList(loader);
+        mMeta20s = in.readArrayList(loader);
 
         final int size = in.readInt();
         mMetas = LinkedHashMultimap.create();
@@ -123,14 +111,6 @@ public class Metadata extends Element {
             final String key = in.readString();
             final Meta meta = in.readParcelable(loader);
             mMetas.put(key, meta);
-        }
-
-        final int size2 = in.readInt();
-        mMeta20s = LinkedHashMultimap.create();
-        for (int i = 0; i < size2; i++) {
-            final String key = in.readString();
-            final Meta20 meta20 = in.readParcelable(loader);
-            mMeta20s.put(key, meta20);
         }
     }
 
@@ -153,19 +133,12 @@ public class Metadata extends Element {
         dest.writeList(mRightses);
         dest.writeList(mSubjects);
         dest.writeList(mLinks);
+        dest.writeList(mMeta20s);
 
         dest.writeInt(mMetas.size());
         final Iterator<Map.Entry<String, Meta>> it = mMetas.entries().iterator();
         while (it.hasNext()) {
             final Map.Entry<String, Meta> entry = it.next();
-            dest.writeString(entry.getKey());
-            dest.writeParcelable(entry.getValue(), flags);
-        }
-
-        dest.writeInt(mMeta20s.size());
-        final Iterator<Map.Entry<String, Meta20>> it2 = mMeta20s.entries().iterator();
-        while (it2.hasNext()) {
-            final Map.Entry<String, Meta20> entry = it2.next();
             dest.writeString(entry.getKey());
             dest.writeParcelable(entry.getValue(), flags);
         }
@@ -212,15 +185,11 @@ public class Metadata extends Element {
                 switch (parser.getName()) {
 
                     case OEBContract.Elements.IDENTIFIER:
-                        final Identifier identifier = new Identifier();
-                        identifier.onParse(parser);
-                        mIdentifiers.add(identifier);
+                        onParseIdentifier(parser);
                         break;
 
                     case OEBContract.Elements.TITLE:
-                        final Title title = new Title();
-                        title.onParse(parser);
-                        mTitles.add(title);
+                        onParseTitle(parser);
                         break;
 
                     case OEBContract.Elements.LANGUAGES:
@@ -230,15 +199,11 @@ public class Metadata extends Element {
                         break;
 
                     case OEBContract.Elements.CONTRIBUTOR:
-                        final Contributor contributor = new Contributor();
-                        contributor.onParse(parser);
-                        mContributors.add(contributor);
+                        onParseContributor(parser);
                         break;
 
                     case OEBContract.Elements.CREATOR:
-                        final Author author = new Author();
-                        author.onParse(parser);
-                        mAuthors.add(author);
+                        onParseCreator(parser);
                         break;
 
                     case OEBContract.Elements.COVERAGE:
@@ -299,9 +264,7 @@ public class Metadata extends Element {
                         break;
 
                     case OEBContract.Elements.META:
-                        final Meta meta = new Meta();
-                        meta.onParse(parser);
-                        mMetas.put(meta.getRefines(), meta);
+                        onSerializeMeta(parser);
                         break;
 
                     case OEBContract.Elements.LINK:
@@ -320,6 +283,131 @@ public class Metadata extends Element {
             }
             eventType = parser.next();
         }
+    }
+
+    private void onParseIdentifier(XmlPullParser parser) throws XmlPullParserException, IOException {
+        final Identifier identifier = new Identifier() {
+            @Override
+            protected void onParseAttributes(XmlPullParser parser)
+                throws XmlPullParserException, IOException {
+                super.onParseAttributes(parser);
+                String scheme = parser.getAttributeValue(OEBContract.Namespaces.OPF, OEBContract.Attributes.SCHEME);
+                if (!TextUtils.isEmpty(scheme)) {
+                    if (TextUtils.isEmpty(mId)) {
+                        mId = generateId();
+                    }
+                    final Meta meta = new Meta("#".concat(mId), Property.IDENTIFIER_TYPE.toString(), scheme);
+                    mMetas.put(meta.getRefines(), meta);
+                }
+            }
+        };
+        identifier.onParse(parser);
+        mIdentifiers.add(identifier);
+    }
+
+    private void onParseTitle(XmlPullParser parser) throws XmlPullParserException, IOException {
+        final Title title = new Title() {
+            @Override
+            protected void onParseAttributes(XmlPullParser parser)
+                throws XmlPullParserException, IOException {
+                super.onParseAttributes(parser);
+                String role = parser.getAttributeValue(OEBContract.Namespaces.OPF, OEBContract.Attributes.ROLE);
+                if (!TextUtils.isEmpty(role)) {
+                    if (TextUtils.isEmpty(mId)) {
+                        mId = generateId();
+                    }
+                    final Meta meta = new Meta("#".concat(mId), Property.ROLE.toString(), role);
+                    mMetas.put(meta.getRefines(), meta);
+                }
+            }
+        };
+        title.onParse(parser);
+        mTitles.add(title);
+    }
+
+    private void onParseContributor(XmlPullParser parser) throws XmlPullParserException, IOException {
+        final Contributor contributor = new Contributor() {
+            @Override
+            protected void onParseAttributes(XmlPullParser parser)
+                throws XmlPullParserException, IOException {
+                super.onParseAttributes(parser);
+                String role = parser.getAttributeValue(OEBContract.Namespaces.OPF, OEBContract.Attributes.ROLE);
+                if (!TextUtils.isEmpty(role)) {
+                    if (TextUtils.isEmpty(mId)) {
+                        mId = generateId();
+                    }
+                    final Meta meta = new Meta("#".concat(mId), Property.ROLE.toString(), role);
+                    mMetas.put(meta.getRefines(), meta);
+                }
+
+                String fileAs = parser.getAttributeValue(OEBContract.Namespaces.OPF, OEBContract.Attributes.FILE_AS);
+                if (!TextUtils.isEmpty(fileAs)) {
+                    if (TextUtils.isEmpty(mId)) {
+                        mId = generateId();
+                    }
+                    final Meta meta = new Meta("#".concat(mId), Property.FILE_AS.toString(), role);
+                    mMetas.put(meta.getRefines(), meta);
+                }
+            }
+        };
+        contributor.onParse(parser);
+        mContributors.add(contributor);
+    }
+
+    private void onParseCreator(XmlPullParser parser) throws XmlPullParserException, IOException {
+        final Author author = new Author() {
+            @Override
+            protected void onParseAttributes(XmlPullParser parser)
+                throws XmlPullParserException, IOException {
+                super.onParseAttributes(parser);
+                String role = parser.getAttributeValue(OEBContract.Namespaces.OPF, OEBContract.Attributes.ROLE);
+                if (!TextUtils.isEmpty(role)) {
+                    if (TextUtils.isEmpty(mId)) {
+                        mId = generateId();
+                    }
+                    final Meta meta = new Meta("#".concat(mId), Property.ROLE.toString(), role);
+                    mMetas.put(meta.getRefines(), meta);
+                }
+
+                String fileAs = parser.getAttributeValue(OEBContract.Namespaces.OPF, OEBContract.Attributes.FILE_AS);
+                if (!TextUtils.isEmpty(fileAs)) {
+                    if (TextUtils.isEmpty(mId)) {
+                        mId = generateId();
+                    }
+                    final Meta meta = new Meta("#".concat(mId), Property.FILE_AS.toString(), role);
+                    mMetas.put(meta.getRefines(), meta);
+                }
+            }
+        };
+        author.onParse(parser);
+        mAuthors.add(author);
+    }
+
+    private void onSerializeMeta(XmlPullParser parser) throws XmlPullParserException, IOException {
+        final Meta meta = new Meta() {
+            @Override
+            protected void onParseAttributes(XmlPullParser parser)
+                throws XmlPullParserException, IOException {
+                super.onParseAttributes(parser);
+                final String name = parser.getAttributeValue("", OEBContract.Attributes.NAME);
+                if (!TextUtils.isEmpty(name)) {
+                    final Meta20 meta20 = new Meta20();
+                    meta20.onParse(parser);
+                    mMeta20s.add(meta20);
+                }
+            }
+        };
+        meta.onParse(parser);
+        if (!TextUtils.isEmpty(meta.getRefines())) {
+            mMetas.put(meta.getRefines(), meta);
+        }
+    }
+
+    @Override
+    protected void setPrefix(XmlSerializer serializer)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        super.setPrefix(serializer);
+        serializer.setPrefix(OEBContract.Namespaces.Prefix.DC, OEBContract.Namespaces.DC);
     }
 
     @Override
@@ -341,5 +429,27 @@ public class Metadata extends Element {
         serializeCollection(serializer, mRightses);
         serializeCollection(serializer, mSubjects);
         serializeCollection(serializer, mLinks);
+        serializeCollection(serializer, mMetas.get(null));
+        serializeCollection(serializer, mMeta20s);
+    }
+
+    @Override
+    protected void serialize(XmlSerializer serializer, Serializerable serializerable)
+        throws IOException, IllegalArgumentException, IllegalStateException {
+        if (serializerable != null) {
+            serializerable.onSerialize(serializer);
+            String id = null;
+            if (serializerable instanceof SimpleElement) {
+                id = ((SimpleElement) serializerable).getId();
+            }
+            if (serializerable instanceof SimpleTextElement) {
+                id = ((SimpleTextElement) serializerable).getId();
+            }
+            if (!TextUtils.isEmpty(id)) {
+                for (Meta meta : mMetas.get("#".concat(id))) {
+                    meta.onSerialize(serializer);
+                }
+            }
+        }
     }
 }

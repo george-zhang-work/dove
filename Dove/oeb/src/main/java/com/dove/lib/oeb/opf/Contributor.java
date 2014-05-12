@@ -9,7 +9,7 @@ import com.dove.lib.oeb.ParcelableCreator;
 /**
  * Created by george on 5/4/14.
  */
-public final class Contributor extends ComplexTextElement {
+public class Contributor extends ComplexTextElement {
 
     public Contributor() {
     }

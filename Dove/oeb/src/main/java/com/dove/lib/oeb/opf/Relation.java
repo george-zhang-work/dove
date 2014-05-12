@@ -29,4 +29,5 @@ public final class Relation extends ComplexTextElement {
     protected String getElementNamespace() {
         return OEBContract.Namespaces.DC;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.dove.lib.oeb;
 
 import android.os.Parcel;
+import android.text.TextUtils;
 
 import com.google.common.base.Objects;
 import com.google.gson.annotations.SerializedName;
@@ -68,6 +69,8 @@ public class TextElement extends Element {
     @Override
     protected void onSerializeContent(XmlSerializer serializer) throws IOException {
         super.onSerializeContent(serializer);
-        serializer.text(mText);
+        if (!TextUtils.isEmpty(mText)) {
+            serializer.text(mText);
+        }
     }
 }

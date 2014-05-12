@@ -4,6 +4,7 @@ package com.dove.lib.oeb.opf;
  * Created by george on 5/1/14.
  */
 public enum Property {
+    EMPTY(""),
     /*--------------------------------------------------------
      * Spine itemref Properties
      *--------------------------------------------------------*/
@@ -30,6 +31,7 @@ public enum Property {
     ONIX_RECORD("onix-record"),
     XML_SIGNATURE("xml-signature"),
     XMP_RECORD("xmp-record"),
+    MODIFIED("dcterms:modified"),
 
     /*--------------------------------------------------------
      * Manifest item Properties
@@ -54,7 +56,7 @@ public enum Property {
                 return property;
             }
         }
-        return null;
+        return EMPTY;
     }
 
     @Override
