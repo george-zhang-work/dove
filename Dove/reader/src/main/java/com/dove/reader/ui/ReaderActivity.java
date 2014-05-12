@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.dove.common.log.LogTag;
 import com.dove.common.log.LogUtils;
 import com.dove.lib.oeb.ncx.NCX;
+import com.dove.lib.oeb.ocf.Container;
 import com.dove.lib.oeb.opf.Package;
 import com.dove.reader.R;
 import com.dove.reader.ui.controller.AccountController;
@@ -105,6 +106,14 @@ public class ReaderActivity extends AbstractReaderActivity
             OutputStream opfOutputStream = new FileOutputStream(opf);
             pkg.onSrerialize(opfOutputStream);
 
+            InputStream containerFIle = assetManager.open("META-INF/container.xml");
+            Container container = new Container();
+            container.onParse(containerFIle);
+            LogUtils.i(LOG_TAG, container.toString());
+
+            File conatainer = new File(file, "container_test.container");
+            OutputStream outputStream1 = new FileOutputStream(conatainer);
+            container.onSrerialize(outputStream1);
         } catch (IOException | XmlPullParserException e) {
             e.printStackTrace();
         }

@@ -44,6 +44,7 @@ public final class OEBContract {
         public static final String VALUE = "value";
         public static final String ROLE = "role";
         public static final String FILE_AS = "file-as";
+        public static final String FULL_PATH = "full-path";
     }
 
     public interface ElementType extends ElementsAndAttributes {
@@ -143,6 +144,9 @@ public final class OEBContract {
         public static final String PAGE_LIST = "pageList";
         public static final String NAV_LIST = "navList";
         public static final String NCX = "ncx";
+        public static final String ROOT_FILE = "rootfile";
+        public static final String ROOT_FILES = "rootfiles";
+        public static final String CONTAINER = "container";
     }
 
     public interface Namespaces {
@@ -154,6 +158,7 @@ public final class OEBContract {
         public static final String CALIBRE = "http://calibre.kovidgoyal.net/2009/metadata";
         public static final String DCTERMS = "http://purl.org/dc/terms/";
         public static final String XSI = "http://www.w3.org/2001/XMLSchema-instance";
+        public static final String CONTAINER = "urn:oasis:names:tc:opendocument:xmlns:container";
 
         public interface Prefix {
             public static final String XMLNS = "xmlns";
