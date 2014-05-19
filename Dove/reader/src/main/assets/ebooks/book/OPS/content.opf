@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.0" xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookId">
+
+	<metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+		<meta content="cover" name="cover"/>
+		<dc:title>Прероденият дракон</dc:title>
+		<dc:creator opf:file-as="Джордан, Робърт" opf:role="aut">Робърт Джордан</dc:creator>
+<dc:creator opf:file-as="Русинов, Валерий" opf:role="trl">Валерий Русинов</dc:creator>
+		<dc:subject>Епос</dc:subject>
+<dc:subject>Фентъзи</dc:subject>
+		
+		<dc:date opf:event="original-publication">1991</dc:date>
+		
+		<dc:identifier id="BookId" opf:scheme="URI">http://chitanka.info/book/1546</dc:identifier>
+		<dc:publisher>Моята библиотека (http://chitanka.info)</dc:publisher>
+		<dc:language>bg</dc:language>
+	</metadata>
+
+	<manifest>
+		<item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+<item id="stylesheet" href="css/main.css" media-type="text/css"/>
+<item id="cover" href="cover.jpg" media-type="image/jpeg"/>
+<item id="logo-image" href="images/chitanka-logo.png" media-type="image/png"/>
+<item id="item-1" href="cover-page.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-2" href="title-page.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-3" href="annotation.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-4" href="chapter-0.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-5" href="chapter-1.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-6" href="chapter-2.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-7" href="chapter-3.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-8" href="chapter-4.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-9" href="chapter-5.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-10" href="chapter-6.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-11" href="chapter-7.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-12" href="chapter-8.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-13" href="chapter-9.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-14" href="chapter-10.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-15" href="chapter-11.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-16" href="chapter-12.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-17" href="chapter-13.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-18" href="chapter-14.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-19" href="chapter-15.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-20" href="chapter-16.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-21" href="chapter-17.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-22" href="chapter-18.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-23" href="chapter-19.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-24" href="chapter-20.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-25" href="chapter-21.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-26" href="chapter-22.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-27" href="chapter-23.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-28" href="chapter-24.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-29" href="chapter-25.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-30" href="chapter-26.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-31" href="chapter-27.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-32" href="chapter-28.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-33" href="chapter-29.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-34" href="chapter-30.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-35" href="chapter-31.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-36" href="chapter-32.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-37" href="chapter-33.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-38" href="chapter-34.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-39" href="chapter-35.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-40" href="chapter-36.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-41" href="chapter-37.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-42" href="chapter-38.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-43" href="chapter-39.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-44" href="chapter-40.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-45" href="chapter-41.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-46" href="chapter-42.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-47" href="chapter-43.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-48" href="chapter-44.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-49" href="chapter-45.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-50" href="chapter-46.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-51" href="chapter-47.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-52" href="chapter-48.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-53" href="chapter-49.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-54" href="chapter-50.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-55" href="chapter-51.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-56" href="chapter-52.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-57" href="chapter-53.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-58" href="chapter-54.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-59" href="chapter-55.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-60" href="chapter-56.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-61" href="info.xhtml" media-type="application/xhtml+xml"/>
+<item id="item-62" href="credits.xhtml" media-type="application/xhtml+xml"/>
+	</manifest>
+
+	<spine toc="ncx">
+		<itemref idref="item-1" linear="yes"/>
+<itemref idref="item-2" linear="yes"/>
+<itemref idref="item-3" linear="yes"/>
+<itemref idref="item-4" linear="yes"/>
+<itemref idref="item-5" linear="yes"/>
+<itemref idref="item-6" linear="yes"/>
+<itemref idref="item-7" linear="yes"/>
+<itemref idref="item-8" linear="yes"/>
+<itemref idref="item-9" linear="yes"/>
+<itemref idref="item-10" linear="yes"/>
+<itemref idref="item-11" linear="yes"/>
+<itemref idref="item-12" linear="yes"/>
+<itemref idref="item-13" linear="yes"/>
+<itemref idref="item-14" linear="yes"/>
+<itemref idref="item-15" linear="yes"/>
+<itemref idref="item-16" linear="yes"/>
+<itemref idref="item-17" linear="yes"/>
+<itemref idref="item-18" linear="yes"/>
+<itemref idref="item-19" linear="yes"/>
+<itemref idref="item-20" linear="yes"/>
+<itemref idref="item-21" linear="yes"/>
+<itemref idref="item-22" linear="yes"/>
+<itemref idref="item-23" linear="yes"/>
+<itemref idref="item-24" linear="yes"/>
+<itemref idref="item-25" linear="yes"/>
+<itemref idref="item-26" linear="yes"/>
+<itemref idref="item-27" linear="yes"/>
+<itemref idref="item-28" linear="yes"/>
+<itemref idref="item-29" linear="yes"/>
+<itemref idref="item-30" linear="yes"/>
+<itemref idref="item-31" linear="yes"/>
+<itemref idref="item-32" linear="yes"/>
+<itemref idref="item-33" linear="yes"/>
+<itemref idref="item-34" linear="yes"/>
+<itemref idref="item-35" linear="yes"/>
+<itemref idref="item-36" linear="yes"/>
+<itemref idref="item-37" linear="yes"/>
+<itemref idref="item-38" linear="yes"/>
+<itemref idref="item-39" linear="yes"/>
+<itemref idref="item-40" linear="yes"/>
+<itemref idref="item-41" linear="yes"/>
+<itemref idref="item-42" linear="yes"/>
+<itemref idref="item-43" linear="yes"/>
+<itemref idref="item-44" linear="yes"/>
+<itemref idref="item-45" linear="yes"/>
+<itemref idref="item-46" linear="yes"/>
+<itemref idref="item-47" linear="yes"/>
+<itemref idref="item-48" linear="yes"/>
+<itemref idref="item-49" linear="yes"/>
+<itemref idref="item-50" linear="yes"/>
+<itemref idref="item-51" linear="yes"/>
+<itemref idref="item-52" linear="yes"/>
+<itemref idref="item-53" linear="yes"/>
+<itemref idref="item-54" linear="yes"/>
+<itemref idref="item-55" linear="yes"/>
+<itemref idref="item-56" linear="yes"/>
+<itemref idref="item-57" linear="yes"/>
+<itemref idref="item-58" linear="yes"/>
+<itemref idref="item-59" linear="yes"/>
+<itemref idref="item-60" linear="yes"/>
+<itemref idref="item-61" linear="yes"/>
+<itemref idref="item-62" linear="yes"/>
+	</spine>
+
+</package>

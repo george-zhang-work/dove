@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
+
+<ncx version="2005-1" xml:lang="bg" xmlns="http://www.daisy.org/z3986/2005/ncx/">
+
+	<head>
+		<meta name="dtb:uid" content="http://chitanka.info/book/1546"/>
+		<meta name="dtb:depth" content="1"/>
+		<meta name="dtb:totalPageCount" content="0"/>
+		<meta name="dtb:maxPageNumber" content="0"/>
+		<meta name="dtb:generator" content="Mylib SfbToEpub Converter"/>
+		<meta name="epub-creator" content="Моята библиотека (http://chitanka.info)"/>
+	</head>
+
+	<docTitle><text>Прероденият дракон</text></docTitle>
+	<docAuthor><text>Робърт Джордан</text></docAuthor>
+
+	<navMap>
+		<navPoint class="chapter" id="navpoint-ext-1" playOrder="1"><navLabel><text>Корица</text></navLabel><content src="cover-page.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-ext-2" playOrder="2"><navLabel><text>Заглавна страница</text></navLabel><content src="title-page.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-ext-3" playOrder="3"><navLabel><text>Анотация</text></navLabel><content src="annotation.xhtml"/></navPoint>
+
+<navPoint class="chapter" id="navpoint-4" playOrder="4"><navLabel><text>Пролог. Крепост на Светлината</text></navLabel><content src="chapter-0.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-5" playOrder="5"><navLabel><text>Глава 1. Очакване</text></navLabel><content src="chapter-1.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-6" playOrder="6"><navLabel><text>Глава 2. Сайдин</text></navLabel><content src="chapter-2.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-7" playOrder="7"><navLabel><text>Глава 3. Вести от равнината</text></navLabel><content src="chapter-3.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-8" playOrder="8"><navLabel><text>Глава 4. Спящи сенки</text></navLabel><content src="chapter-4.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-9" playOrder="9"><navLabel><text>Глава 5. Бродещи кошмари</text></navLabel><content src="chapter-5.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-10" playOrder="10"><navLabel><text>Глава 6. Ловът започва</text></navLabel><content src="chapter-6.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-11" playOrder="11"><navLabel><text>Глава 7. На излизане от планините</text></navLabel><content src="chapter-7.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-12" playOrder="12"><navLabel><text>Глава 8. Джарра</text></navLabel><content src="chapter-8.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-13" playOrder="13"><navLabel><text>Глава 9. Вълчи сънища</text></navLabel><content src="chapter-9.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-14" playOrder="14"><navLabel><text>Глава 10. Тайни</text></navLabel><content src="chapter-10.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-15" playOrder="15"><navLabel><text>Глава 11. Тар Валон</text></navLabel><content src="chapter-11.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-16" playOrder="16"><navLabel><text>Глава 12. Амирлинския трон</text></navLabel><content src="chapter-12.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-17" playOrder="17"><navLabel><text>Глава 13. Наказания</text></navLabel><content src="chapter-13.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-18" playOrder="18"><navLabel><text>Глава 14. Бодежът на тръните</text></navLabel><content src="chapter-14.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-19" playOrder="19"><navLabel><text>Глава 15. Сивият</text></navLabel><content src="chapter-15.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-20" playOrder="20"><navLabel><text>Глава 16. Три ловкини</text></navLabel><content src="chapter-16.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-21" playOrder="21"><navLabel><text>Глава 17. Червената сестра</text></navLabel><content src="chapter-17.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-22" playOrder="22"><navLabel><text>Глава 18. Лечителство</text></navLabel><content src="chapter-18.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-23" playOrder="23"><navLabel><text>Глава 19. Пробуждане</text></navLabel><content src="chapter-19.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-24" playOrder="24"><navLabel><text>Глава 20. Посещения</text></navLabel><content src="chapter-20.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-25" playOrder="25"><navLabel><text>Глава 21. Свят на сънища</text></navLabel><content src="chapter-21.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-26" playOrder="26"><navLabel><text>Глава 22. Цената на пръстена</text></navLabel><content src="chapter-22.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-27" playOrder="27"><navLabel><text>Глава 23. Впечатана</text></navLabel><content src="chapter-23.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-28" playOrder="28"><navLabel><text>Глава 24. Търсене и находки</text></navLabel><content src="chapter-24.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-29" playOrder="29"><navLabel><text>Глава 25. Въпроси</text></navLabel><content src="chapter-25.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-30" playOrder="30"><navLabel><text>Глава 26. Зад една ключалка</text></navLabel><content src="chapter-26.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-31" playOrder="31"><navLabel><text>Глава 27. Тел-айеран-риод</text></navLabel><content src="chapter-27.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-32" playOrder="32"><navLabel><text>Глава 28. Изход</text></navLabel><content src="chapter-28.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-33" playOrder="33"><navLabel><text>Глава 29. Капан за щракане</text></navLabel><content src="chapter-29.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-34" playOrder="34"><navLabel><text>Глава 30. Първо хвърляне на зара</text></navLabel><content src="chapter-30.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-35" playOrder="35"><navLabel><text>Глава 31. „Жената от Танчико“</text></navLabel><content src="chapter-31.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-36" playOrder="36"><navLabel><text>Глава 32. Първият кораб</text></navLabel><content src="chapter-32.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-37" playOrder="37"><navLabel><text>Глава 33. Във вътъка</text></navLabel><content src="chapter-33.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-38" playOrder="38"><navLabel><text>Глава 34. Друг танц</text></navLabel><content src="chapter-34.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-39" playOrder="39"><navLabel><text>Глава 35. Соколица</text></navLabel><content src="chapter-35.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-40" playOrder="40"><navLabel><text>Глава 36. Щерка на Нощта</text></navLabel><content src="chapter-36.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-41" playOrder="41"><navLabel><text>Глава 37. Пожарища в Кайриен</text></navLabel><content src="chapter-37.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-42" playOrder="42"><navLabel><text>Глава 38. Деви на копието</text></navLabel><content src="chapter-38.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-43" playOrder="43"><navLabel><text>Глава 39. Нишки в Шарката</text></navLabel><content src="chapter-39.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-44" playOrder="44"><navLabel><text>Глава 40. Среднощен герой</text></navLabel><content src="chapter-40.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-45" playOrder="45"><navLabel><text>Глава 41. Ловджийска клетва</text></navLabel><content src="chapter-41.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-46" playOrder="46"><navLabel><text>Глава 42. „Укротяването на язовеца“</text></navLabel><content src="chapter-42.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-47" playOrder="47"><navLabel><text>Глава 43. Братя на Сянката</text></navLabel><content src="chapter-43.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-48" playOrder="48"><navLabel><text>Глава 44. Гонитба</text></navLabel><content src="chapter-44.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-49" playOrder="49"><navLabel><text>Глава 45. Кемлин</text></navLabel><content src="chapter-45.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-50" playOrder="50"><navLabel><text>Глава 46. Послание от Сянката</text></navLabel><content src="chapter-46.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-51" playOrder="51"><navLabel><text>Глава 47. Да надбягаш сянката</text></navLabel><content src="chapter-47.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-52" playOrder="52"><navLabel><text>Глава 48. Следвай занаята</text></navLabel><content src="chapter-48.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-53" playOrder="53"><navLabel><text>Глава 49. Буря в Тийр</text></navLabel><content src="chapter-49.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-54" playOrder="54"><navLabel><text>Глава 50. Чукът</text></navLabel><content src="chapter-50.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-55" playOrder="55"><navLabel><text>Глава 51. Стръв за мрежата</text></navLabel><content src="chapter-51.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-56" playOrder="56"><navLabel><text>Глава 52. В търсене на цяр</text></navLabel><content src="chapter-52.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-57" playOrder="57"><navLabel><text>Глава 53. Потокът на Духа</text></navLabel><content src="chapter-53.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-58" playOrder="58"><navLabel><text>Глава 54. В Камъка</text></navLabel><content src="chapter-54.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-59" playOrder="59"><navLabel><text>Глава 55. Написано в пророчество</text></navLabel><content src="chapter-55.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-60" playOrder="60"><navLabel><text>Глава 56. Народ на Дракона</text></navLabel><content src="chapter-56.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-ext-61" playOrder="61"><navLabel><text>Допълнителна информация</text></navLabel><content src="info.xhtml"/></navPoint>
+<navPoint class="chapter" id="navpoint-ext-62" playOrder="62"><navLabel><text>Заслуги</text></navLabel><content src="credits.xhtml"/></navPoint>
+	</navMap>
+
+</ncx>

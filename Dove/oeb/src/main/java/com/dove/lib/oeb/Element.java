@@ -23,6 +23,8 @@ import java.util.Collection;
  */
 public class Element implements Parcelable, Parserable, Serializerable {
 
+    public static final ClassLoaderCreator<Element> CREATOR = new ParcelableCreator<>(Element.class);
+
     protected static final String LOG_TAG = LogTag.getLogTag();
 
     public Element() {
@@ -56,8 +58,6 @@ public class Element implements Parcelable, Parserable, Serializerable {
     public String toSerialize() {
         return new GsonBuilder().setPrettyPrinting().create().toJson(this);
     }
-
-    public static final ClassLoaderCreator<Element> CREATOR = new ParcelableCreator<>(Element.class);
 
     protected String getElementName() {
         return OEBContract.Elements.ELEMENT;
